@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        /* Smooth fade for filtering */
         .hospital-card { transition: all 0.3s ease; }
         .hidden-card { display: none; }
     </style>
@@ -24,11 +23,14 @@
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
+                
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
                     <a href="hospitals.html" class="text-blue-600 font-bold border-b-2 border-blue-600">Hospitals</a>
+                    <a href="ayush.html" class="text-green-700 hover:text-green-900 font-bold">AYUSH Centers</a>
                     <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
@@ -37,6 +39,23 @@
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg z-50">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Treatments</a>
+                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold bg-blue-50">Hospitals</a>
+                <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
+                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
             </div>
         </div>
     </nav>
@@ -60,36 +79,20 @@
                 <div class="mb-6">
                     <h4 class="font-bold text-sm text-gray-600 mb-2 uppercase">By City</h4>
                     <div class="space-y-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox city-filter" value="delhi"> <span>Delhi NCR</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox city-filter" value="mumbai"> <span>Mumbai</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox city-filter" value="chennai"> <span>Chennai</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox city-filter" value="rishikesh"> <span>Rishikesh</span>
-                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox city-filter" value="delhi"> <span>Delhi NCR</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox city-filter" value="mumbai"> <span>Mumbai</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox city-filter" value="chennai"> <span>Chennai</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox city-filter" value="rishikesh"> <span>Rishikesh</span></label>
                     </div>
                 </div>
 
                 <div>
                     <h4 class="font-bold text-sm text-gray-600 mb-2 uppercase">By Specialty</h4>
                     <div class="space-y-2">
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox spec-filter" value="oncology"> <span>Oncology (Cancer)</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox spec-filter" value="cardiology"> <span>Cardiology (Heart)</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox spec-filter" value="transplant"> <span>Transplants</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer">
-                            <input type="checkbox" class="filter-checkbox spec-filter" value="ayurveda"> <span>Ayurveda</span>
-                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox spec-filter" value="oncology"> <span>Oncology (Cancer)</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox spec-filter" value="cardiology"> <span>Cardiology (Heart)</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox spec-filter" value="transplant"> <span>Transplants</span></label>
+                        <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox spec-filter" value="ayurveda"> <span>Ayurveda</span></label>
                     </div>
                 </div>
             </div>
@@ -97,89 +100,44 @@
 
         <div class="md:w-3/4">
             <p id="result-count" class="text-gray-500 text-sm mb-4">Showing all hospitals</p>
-            
             <div class="grid grid-cols-1 gap-6" id="hospital-grid">
                 
-                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" 
-                     data-city="delhi chennai" 
-                     data-spec="oncology cardiology transplant">
-                    <div class="md:w-1/3">
-                        <img src="https://images.unsplash.com/photo-1587351021759-3e566b9af923?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
+                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="delhi chennai" data-spec="oncology cardiology transplant">
+                    <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1587351021759-3e566b9af923?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between">
-                            <h3 class="text-xl font-bold text-gray-900">Apollo Hospitals</h3>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span>
-                        </div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Apollo Hospitals</h3><span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span></div>
                         <p class="text-gray-600 text-sm mt-2">Premium care for Oncology & Transplants.</p>
-                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide">
-                            <span class="mr-3"><i class="fas fa-map-marker-alt text-red-500"></i> Delhi, Chennai</span>
-                            <span><i class="fas fa-stethoscope text-blue-500"></i> Cancer, Heart</span>
-                        </div>
+                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Delhi, Chennai</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
-
-                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" 
-                     data-city="delhi" 
-                     data-spec="transplant cardiology">
-                    <div class="md:w-1/3">
-                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
+                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="delhi" data-spec="transplant cardiology">
+                    <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between">
-                            <h3 class="text-xl font-bold text-gray-900">Medanta - The Medicity</h3>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span>
-                        </div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Medanta</h3><span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span></div>
                         <p class="text-gray-600 text-sm mt-2">World leader in Liver Transplants & Heart Surgery.</p>
-                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide">
-                            <span class="mr-3"><i class="fas fa-map-marker-alt text-red-500"></i> Gurgaon (Delhi)</span>
-                            <span><i class="fas fa-stethoscope text-blue-500"></i> Transplant</span>
-                        </div>
+                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Gurgaon</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
-
-                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" 
-                     data-city="mumbai" 
-                     data-spec="oncology">
-                    <div class="md:w-1/3">
-                        <img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
+                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="mumbai" data-spec="oncology">
+                    <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between">
-                            <h3 class="text-xl font-bold text-gray-900">Tata Memorial</h3>
-                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Govt/Trust</span>
-                        </div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Tata Memorial</h3><span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Trust</span></div>
                         <p class="text-gray-600 text-sm mt-2">Asia's premier and most affordable Cancer center.</p>
-                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide">
-                            <span class="mr-3"><i class="fas fa-map-marker-alt text-red-500"></i> Mumbai</span>
-                            <span><i class="fas fa-stethoscope text-blue-500"></i> Oncology Only</span>
-                        </div>
+                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Mumbai</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
-
-                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" 
-                     data-city="rishikesh" 
-                     data-spec="ayurveda">
-                    <div class="md:w-1/3">
-                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
+                <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="rishikesh" data-spec="ayurveda">
+                    <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between">
-                            <h3 class="text-xl font-bold text-gray-900">Ananda in the Himalayas</h3>
-                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Luxury</span>
-                        </div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Ananda</h3><span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Luxury</span></div>
                         <p class="text-gray-600 text-sm mt-2">World's best luxury Ayurveda & Detox retreat.</p>
-                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide">
-                            <span class="mr-3"><i class="fas fa-map-marker-alt text-red-500"></i> Rishikesh</span>
-                            <span><i class="fas fa-stethoscope text-blue-500"></i> Ayurveda</span>
-                        </div>
+                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Rishikesh</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
-
             </div>
             
             <div id="no-results" class="hidden text-center py-12">
@@ -187,11 +145,14 @@
                 <p class="text-gray-500">No hospitals match your selected filters.</p>
                 <button onclick="resetFilters()" class="text-blue-600 font-bold mt-2">Clear Filters</button>
             </div>
-
         </div>
     </div>
 
     <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
         const checkboxes = document.querySelectorAll('.filter-checkbox');
         const cards = document.querySelectorAll('.hospital-card');
         const noResults = document.getElementById('no-results');
@@ -202,21 +163,14 @@
         });
 
         function filterHospitals() {
-            // 1. Get selected values
             const selectedCities = Array.from(document.querySelectorAll('.city-filter:checked')).map(cb => cb.value);
             const selectedSpecs = Array.from(document.querySelectorAll('.spec-filter:checked')).map(cb => cb.value);
-
             let visibleCount = 0;
 
-            // 2. Loop through cards
             cards.forEach(card => {
                 const cardCities = card.getAttribute('data-city');
                 const cardSpecs = card.getAttribute('data-spec');
-
-                // Check City Match (If no city selected, match all)
                 const cityMatch = selectedCities.length === 0 || selectedCities.some(city => cardCities.includes(city));
-                
-                // Check Spec Match (If no spec selected, match all)
                 const specMatch = selectedSpecs.length === 0 || selectedSpecs.some(spec => cardSpecs.includes(spec));
 
                 if (cityMatch && specMatch) {
@@ -227,7 +181,6 @@
                 }
             });
 
-            // 3. Update UI
             if (visibleCount === 0) {
                 noResults.classList.remove('hidden');
                 countText.innerText = "No hospitals found";
