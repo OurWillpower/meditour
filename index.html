@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TreatInt | Global Medical Marketplace</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         body { font-family: 'Poppins', sans-serif; }
         
+        /* SLIDER STYLES */
         .slider-container {
             position: relative;
             height: 100vh;
@@ -32,10 +37,7 @@
             justify-content: center;
         }
         
-        .slide.active {
-            opacity: 1;
-            z-index: 10;
-        }
+        .slide.active { opacity: 1; z-index: 10; }
 
         /* Dark Overlay */
         .slide::before {
@@ -48,7 +50,17 @@
             background: rgba(0, 20, 40, 0.6);
         }
 
-        /* TRANSITION EFFECTS */
+        /* Slide Text Styling */
+        .slide-content {
+            position: relative;
+            z-index: 20;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-bottom: 120px; /* Space for search bar */
+        }
+
+        /* TRANSITIONS */
         .slide.active.fade { opacity: 1; }
         .slide.slide-left { transform: translateX(100%); }
         .slide.active.slide-left { transform: translateX(0); }
@@ -59,25 +71,9 @@
         .slide.slide-up { transform: translateY(100%); }
         .slide.active.slide-up { transform: translateY(0); }
 
-        /* Text Content inside Slides */
-        .slide-content {
-            position: relative;
-            z-index: 20;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-            margin-bottom: 100px; /* Space for search bar */
-        }
-
-        /* Static Search Bar Overlay */
-        .search-overlay {
-            position: absolute;
-            bottom: 15%; /* Positioned lower so text has space */
-            left: 0;
-            width: 100%;
-            z-index: 50;
-            display: flex;
-            justify-content: center;
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -86,16 +82,19 @@
     <nav class="bg-white shadow-md fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
+                
                 <div class="flex items-center">
                     <a href="index.html" class="text-3xl font-bold text-blue-900">
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
                     <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
                     <a href="#" class="text-blue-900 font-bold border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
@@ -104,58 +103,71 @@
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">Treatments</a>
+                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">Hospitals</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 font-bold hover:bg-gray-50 rounded-md">Empanel With Us</a>
+                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold hover:bg-gray-50 rounded-md">Get Free Quote</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500 hover:text-blue-900 hover:bg-gray-50 rounded-md">
+                    <i class="fas fa-user-circle mr-2"></i> Login
+                </a>
             </div>
         </div>
     </nav>
 
     <header class="slider-container">
-        
         <div class="slide active fade" style="background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
             <div class="slide-content max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Healthcare Without Borders.<br>Treatment Anywhere.</h1>
-                <p class="text-xl md:text-2xl drop-shadow-md">Connecting patients from Bangladesh to the best care globally.</p>
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Healthcare Without Borders</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Connecting you to the best care globally.</p>
             </div>
         </div>
-        
         <div class="slide slide-left" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
             <div class="slide-content max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Advanced Surgical Excellence</h1>
-                <p class="text-xl md:text-2xl drop-shadow-md">Top Surgeons for Cardiac, Neuro, and Orthopedics.</p>
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Advanced Surgical Excellence</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Top Surgeons for Cardiac & Neuro.</p>
             </div>
         </div>
-        
         <div class="slide zoom-in" style="background-image: url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
             <div class="slide-content max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Holistic Healing & Ayurveda</h1>
-                <p class="text-xl md:text-2xl drop-shadow-md">Ancient wisdom meets modern wellness in Kerala.</p>
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Holistic Healing</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Ancient Ayurveda meets modern wellness.</p>
             </div>
         </div>
-        
         <div class="slide slide-up" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
             <div class="slide-content max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Seamless Medical Travel</h1>
-                <p class="text-xl md:text-2xl drop-shadow-md">We handle your Visa, Flights, and Accommodation.</p>
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Seamless Travel</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">We handle your Visa, Flights, and Stay.</p>
             </div>
         </div>
-        
         <div class="slide slide-right" style="background-image: url('https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
             <div class="slide-content max-w-4xl">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Patient-First Care</h1>
-                <p class="text-xl md:text-2xl drop-shadow-md">Your health and comfort are our only priority.</p>
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Patient-First Care</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Your comfort is our priority.</p>
             </div>
         </div>
 
-        <div class="search-overlay">
-            <div class="bg-white p-4 rounded-lg shadow-2xl flex flex-col md:flex-row gap-4 w-11/12 max-w-4xl">
-                <div class="flex-1 flex items-center border-b md:border-b-0 md:border-r border-gray-300 px-2">
+        <div class="absolute bottom-10 left-0 w-full z-50 flex justify-center px-4">
+            <div class="bg-white p-3 rounded-lg shadow-2xl flex flex-col gap-3 w-full max-w-md">
+                <div class="flex items-center border-b border-gray-300 px-2 py-1">
                     <i class="fas fa-stethoscope text-gray-400 mr-3"></i>
-                    <input type="text" placeholder="Treatment (e.g., Cardiac, IVF)" class="w-full outline-none text-gray-700 p-2">
+                    <input type="text" placeholder="Treatment..." class="w-full outline-none text-gray-700">
                 </div>
-                <div class="flex-1 flex items-center border-b md:border-b-0 border-gray-300 px-2">
+                <div class="flex items-center border-b border-gray-300 px-2 py-1">
                     <i class="fas fa-map-marker-alt text-gray-400 mr-3"></i>
-                    <input type="text" placeholder="Preferred Country" class="w-full outline-none text-gray-700 p-2">
+                    <input type="text" placeholder="Country..." class="w-full outline-none text-gray-700">
                 </div>
-                <a href="contact.html" class="bg-blue-600 text-white px-8 py-3 rounded-md font-bold hover:bg-blue-700 transition flex items-center justify-center">
+                <a href="contact.html" class="bg-blue-600 text-white text-center py-3 rounded-md font-bold hover:bg-blue-700 shadow-md">
                     SEARCH
                 </a>
             </div>
@@ -165,11 +177,10 @@
     <section class="py-10 bg-white border-b">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-gray-500 mb-6 uppercase tracking-wide text-sm font-semibold">TreatInt Global Partner Network</p>
-            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition duration-500">
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale">
                 <div class="flex items-center gap-2"><i class="fas fa-hospital text-2xl"></i> <span class="text-xl font-bold">Apollo</span></div>
                 <div class="flex items-center gap-2"><i class="fas fa-plus-square text-2xl"></i> <span class="text-xl font-bold">Fortis</span></div>
                 <div class="flex items-center gap-2"><i class="fas fa-star-of-life text-2xl"></i> <span class="text-xl font-bold">Max</span></div>
-                <div class="flex items-center gap-2"><i class="fas fa-heart text-2xl"></i> <span class="text-xl font-bold">Medanta</span></div>
             </div>
         </div>
     </section>
@@ -178,39 +189,23 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900">End-to-End Care Logistics</h2>
-                <p class="mt-4 text-gray-600 text-lg">We don't just book appointments. We manage the entire journey.</p>
+                <p class="mt-4 text-gray-600 text-lg">We manage the entire journey.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-blue-500">
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-blue-500">
                     <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-600 text-2xl"><i class="fas fa-passport"></i></div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Medical Visa Support</h3>
-                    <p class="text-gray-600">We provide invitation letters and coordinate with embassies to expedite your medical visa processing.</p>
+                    <p class="text-gray-600">We coordinate with embassies to expedite your medical visa processing.</p>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-green-500">
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-green-500">
                     <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-600 text-2xl"><i class="fas fa-utensils"></i></div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Stay & Halal Food</h3>
-                    <p class="text-gray-600">Comfortable guest houses near hospitals with dietary-specific meal plans (Halal, Veg, Post-op diet).</p>
+                    <p class="text-gray-600">Guest houses with dietary-specific meal plans (Halal, Veg).</p>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-red-500">
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-red-500">
                     <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-6 text-red-600 text-2xl"><i class="fas fa-dove"></i></div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Repatriation Services</h3>
-                    <p class="text-gray-600">In unfortunate events, we handle embalming, coffin certification, and air cargo clearance for return to origin.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-yellow-500">
-                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-6 text-yellow-600 text-2xl"><i class="fas fa-taxi"></i></div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Airport to Hospital</h3>
-                    <p class="text-gray-600">Private airport pickups, ambulance services, and daily shuttles between your hotel and the hospital.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-purple-500">
-                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-6 text-purple-600 text-2xl"><i class="fas fa-flask"></i></div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Pharmacy & Diagnostics</h3>
-                    <p class="text-gray-600">Pre-order discharge medicines and book lab tests at discounted rates with home sample collection.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 border-t-4 border-indigo-500">
-                    <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mb-6 text-indigo-600 text-2xl"><i class="fas fa-headset"></i></div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Patient Concierge</h3>
-                    <p class="text-gray-600">A dedicated case manager to handle currency exchange, SIM cards, and language translation.</p>
+                    <p class="text-gray-600">In unfortunate events, we handle air cargo clearance for return.</p>
                 </div>
             </div>
         </div>
@@ -221,22 +216,22 @@
     </footer>
 
     <script>
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // SLIDER LOGIC
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         const totalSlides = slides.length;
 
         function nextSlide() {
-            // Remove active class from current slide
             slides[currentSlide].classList.remove('active');
-            
-            // Calculate next slide index
             currentSlide = (currentSlide + 1) % totalSlides;
-            
-            // Add active class to next slide
             slides[currentSlide].classList.add('active');
         }
-
-        // Change slide every 5 seconds
         setInterval(nextSlide, 5000);
     </script>
 
