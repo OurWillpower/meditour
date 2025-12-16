@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; }
+        /* Smooth fade for filtering */
+        .treatment-card { transition: all 0.3s ease; }
+        .hidden-card { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -22,9 +25,9 @@
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
+                    <a href="treatments.html" class="text-blue-600 font-bold border-b-2 border-blue-600">Treatments</a>
                     <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
-                    <a href="#" class="text-blue-900 font-bold border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
+                    <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
@@ -40,66 +43,159 @@
 
     <div class="h-20"></div>
 
-    <div class="max-w-7xl mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-center text-blue-900 mb-12">Our Specialized Treatments</h1>
+    <div class="bg-blue-900 text-white py-12 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">Specialized Treatments</h1>
+        <p class="opacity-80">World-class procedures at a fraction of the cost.</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Oncology (Cancer Care)</h3>
-                    <p class="text-gray-600 mb-4">Advanced chemotherapy, radiation, and surgical oncology from top specialists.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
+        <div class="md:w-1/4">
+            <div class="bg-white p-6 rounded-xl shadow-md sticky top-24">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg text-gray-800"><i class="fas fa-filter text-blue-500 mr-2"></i> Category</h3>
+                    <button onclick="resetFilters()" class="text-xs text-red-500 font-semibold hover:underline">Reset</button>
                 </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Cardiology (Heart)</h3>
-                    <p class="text-gray-600 mb-4">Bypass surgery, Angioplasty, and Pediatric heart surgeries with high success rates.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Organ Transplant</h3>
-                    <p class="text-gray-600 mb-4">Legal and ethical Liver, Kidney, and Bone Marrow transplants at authorized centers.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
-                </div>
-            </div>
-             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">IVF & Infertility</h3>
-                    <p class="text-gray-600 mb-4">World-class fertility treatments with high success rates for international couples.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
-                </div>
-            </div>
-             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1576091160550-2187d80a18f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Orthopedics</h3>
-                    <p class="text-gray-600 mb-4">Knee replacement, hip replacement, and spine surgeries using robotic technology.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
-                </div>
-            </div>
-             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-                <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ayurveda & Wellness</h3>
-                    <p class="text-gray-600 mb-4">Holistic healing, detox (Panchakarma), and rejuvenation therapies in Kerala.</p>
-                    <a href="contact.html" class="text-blue-600 font-semibold hover:text-blue-800">Get Quote &rarr;</a>
+                
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                        <input type="checkbox" class="filter-checkbox cat-filter" value="surgery"> <span>General Surgery</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                        <input type="checkbox" class="filter-checkbox cat-filter" value="transplant"> <span>Organ Transplant</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                        <input type="checkbox" class="filter-checkbox cat-filter" value="fertility"> <span>IVF & Fertility</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                        <input type="checkbox" class="filter-checkbox cat-filter" value="wellness"> <span>Ayurveda & Wellness</span>
+                    </label>
                 </div>
             </div>
         </div>
+
+        <div class="md:w-3/4">
+            <p id="result-count" class="text-gray-500 text-sm mb-4">Showing all treatments</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="treatment-grid">
+                
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-1 rounded mb-2 inline-block">Surgery</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Oncology (Cancer)</h3>
+                        <p class="text-gray-600 text-sm mb-4">Chemotherapy, Radiation, and Surgical Oncology.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-1 rounded mb-2 inline-block">Surgery</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Cardiology</h3>
+                        <p class="text-gray-600 text-sm mb-4">Bypass, Stents, and Pediatric Heart Surgery.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="transplant">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-orange-100 text-orange-800 font-bold px-2 py-1 rounded mb-2 inline-block">Transplant</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Organ Transplant</h3>
+                        <p class="text-gray-600 text-sm mb-4">Liver, Kidney, and Bone Marrow procedures.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="fertility">
+                    <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-pink-100 text-pink-800 font-bold px-2 py-1 rounded mb-2 inline-block">Fertility</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">IVF & Infertility</h3>
+                        <p class="text-gray-600 text-sm mb-4">High success rate fertility treatments for couples.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2187d80a18f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-1 rounded mb-2 inline-block">Surgery</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Orthopedics</h3>
+                        <p class="text-gray-600 text-sm mb-4">Knee Replacement, Hip Replacement, Spine.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="wellness">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-xs bg-green-100 text-green-800 font-bold px-2 py-1 rounded mb-2 inline-block">Wellness</span>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Ayurveda</h3>
+                        <p class="text-gray-600 text-sm mb-4">Detox, Panchakarma, and Rejuvenation.</p>
+                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+
+             <div id="no-results" class="hidden text-center py-12">
+                <i class="fas fa-search text-gray-300 text-4xl mb-4"></i>
+                <p class="text-gray-500">No treatments match your filters.</p>
+                <button onclick="resetFilters()" class="text-blue-600 font-bold mt-2">Clear Filters</button>
+            </div>
+
+        </div>
     </div>
 
-    <footer class="bg-gray-900 text-white py-8 text-center">
-        <p>&copy; 2025 TreatInt. All Rights Reserved.</p>
-    </footer>
+    <script>
+        const checkboxes = document.querySelectorAll('.filter-checkbox');
+        const cards = document.querySelectorAll('.treatment-card');
+        const noResults = document.getElementById('no-results');
+        const countText = document.getElementById('result-count');
+
+        checkboxes.forEach(box => {
+            box.addEventListener('change', filterTreatments);
+        });
+
+        function filterTreatments() {
+            // 1. Get selected values
+            const selectedCats = Array.from(document.querySelectorAll('.cat-filter:checked')).map(cb => cb.value);
+
+            let visibleCount = 0;
+
+            // 2. Loop through cards
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-cat');
+
+                // Check Category Match (If no category selected, match all)
+                const catMatch = selectedCats.length === 0 || selectedCats.includes(cardCat);
+
+                if (catMatch) {
+                    card.classList.remove('hidden-card');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden-card');
+                }
+            });
+
+            // 3. Update UI
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+                countText.innerText = "No treatments found";
+            } else {
+                noResults.classList.add('hidden');
+                countText.innerText = `Showing ${visibleCount} treatments`;
+            }
+        }
+
+        function resetFilters() {
+            checkboxes.forEach(cb => cb.checked = false);
+            filterTreatments();
+        }
+    </script>
 
 </body>
 </html>
