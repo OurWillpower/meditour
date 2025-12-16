@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Poppins', sans-serif; }
-        /* Smooth fade for filtering */
         .treatment-card { transition: all 0.3s ease; }
         .hidden-card { display: none; }
     </style>
@@ -24,11 +23,14 @@
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
+                
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-blue-600 font-bold border-b-2 border-blue-600">Treatments</a>
                     <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
+                    <a href="ayush.html" class="text-green-700 hover:text-green-900 font-bold">AYUSH Centers</a>
                     <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
@@ -37,6 +39,23 @@
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg z-50">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold bg-blue-50">Treatments</a>
+                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Hospitals</a>
+                <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
+                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
             </div>
         </div>
     </nav>
@@ -58,18 +77,10 @@
                 </div>
                 
                 <div class="space-y-3">
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                        <input type="checkbox" class="filter-checkbox cat-filter" value="surgery"> <span>General Surgery</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                        <input type="checkbox" class="filter-checkbox cat-filter" value="transplant"> <span>Organ Transplant</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                        <input type="checkbox" class="filter-checkbox cat-filter" value="fertility"> <span>IVF & Fertility</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                        <input type="checkbox" class="filter-checkbox cat-filter" value="wellness"> <span>Ayurveda & Wellness</span>
-                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"><input type="checkbox" class="filter-checkbox cat-filter" value="surgery"> <span>General Surgery</span></label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"><input type="checkbox" class="filter-checkbox cat-filter" value="transplant"> <span>Organ Transplant</span></label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"><input type="checkbox" class="filter-checkbox cat-filter" value="fertility"> <span>IVF & Fertility</span></label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-2 rounded"><input type="checkbox" class="filter-checkbox cat-filter" value="wellness"> <span>Ayurveda & Wellness</span></label>
                 </div>
             </div>
         </div>
@@ -78,7 +89,6 @@
             <p id="result-count" class="text-gray-500 text-sm mb-4">Showing all treatments</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="treatment-grid">
-                
                 <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
                     <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -88,7 +98,6 @@
                         <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
                     </div>
                 </div>
-
                 <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
                     <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -98,7 +107,6 @@
                         <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
                     </div>
                 </div>
-
                 <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="transplant">
                     <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -108,7 +116,6 @@
                         <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
                     </div>
                 </div>
-
                 <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="fertility">
                     <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -118,17 +125,6 @@
                         <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
                     </div>
                 </div>
-
-                <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="surgery">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2187d80a18f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2 py-1 rounded mb-2 inline-block">Surgery</span>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Orthopedics</h3>
-                        <p class="text-gray-600 text-sm mb-4">Knee Replacement, Hip Replacement, Spine.</p>
-                        <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
-                    </div>
-                </div>
-
                 <div class="treatment-card bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" data-cat="wellness">
                     <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
                     <div class="p-6">
@@ -138,7 +134,6 @@
                         <a href="contact.html" class="text-blue-600 font-bold hover:underline text-sm">Get Quote &rarr;</a>
                     </div>
                 </div>
-
             </div>
 
              <div id="no-results" class="hidden text-center py-12">
@@ -146,11 +141,14 @@
                 <p class="text-gray-500">No treatments match your filters.</p>
                 <button onclick="resetFilters()" class="text-blue-600 font-bold mt-2">Clear Filters</button>
             </div>
-
         </div>
     </div>
 
     <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
         const checkboxes = document.querySelectorAll('.filter-checkbox');
         const cards = document.querySelectorAll('.treatment-card');
         const noResults = document.getElementById('no-results');
@@ -161,18 +159,11 @@
         });
 
         function filterTreatments() {
-            // 1. Get selected values
             const selectedCats = Array.from(document.querySelectorAll('.cat-filter:checked')).map(cb => cb.value);
-
             let visibleCount = 0;
-
-            // 2. Loop through cards
             cards.forEach(card => {
                 const cardCat = card.getAttribute('data-cat');
-
-                // Check Category Match (If no category selected, match all)
                 const catMatch = selectedCats.length === 0 || selectedCats.includes(cardCat);
-
                 if (catMatch) {
                     card.classList.remove('hidden-card');
                     visibleCount++;
@@ -180,8 +171,6 @@
                     card.classList.add('hidden-card');
                 }
             });
-
-            // 3. Update UI
             if (visibleCount === 0) {
                 noResults.classList.remove('hidden');
                 countText.innerText = "No treatments found";
