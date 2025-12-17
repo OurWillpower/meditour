@@ -21,38 +21,35 @@
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
-                
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
                     <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
                     <a href="ayush.html" class="text-green-700 font-bold border-b-2 border-green-700">AYUSH Centers</a>
-                    <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
+                    <a href="empanel.html" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
-
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
                     </a>
-                    <a href="#" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
+                    <a href="login.html" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
-
                 <div class="md:hidden flex items-center">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
                         <i class="fas fa-bars text-3xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg">
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg z-50">
             <div class="px-4 pt-2 pb-4 space-y-1">
                 <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Treatments</a>
                 <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Hospitals</a>
                 <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
-                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
+                <a href="empanel.html" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
                 <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
+                <a href="login.html" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
             </div>
         </div>
     </nav>
@@ -70,93 +67,59 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 py-12">
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition border border-stone-200">
                 <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover">
                 <div class="p-8">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-2xl font-bold text-gray-900 font-serif">Ananda in the Himalayas</h3>
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Luxury Retreat</span>
-                    </div>
+                    <div class="flex justify-between items-start mb-2"><h3 class="text-2xl font-bold text-gray-900 font-serif">Ananda in the Himalayas</h3><span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Luxury Retreat</span></div>
                     <p class="text-gray-600 mb-4">Located in the tranquil Himalayan foothills, Ananda integrates traditional Ayurveda, Yoga, and Vedanta with international wellness experiences.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Detox</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Weight Management</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Stress Management</span>
-                    </div>
-                    <div class="flex items-center text-gray-500 text-sm mb-6">
-                        <i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Rishikesh, Uttarakhand
-                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Detox</span><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Weight Management</span></div>
+                    <div class="flex items-center text-gray-500 text-sm mb-6"><i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Rishikesh, Uttarakhand</div>
                     <a href="contact.html" class="block text-center bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition">Request Package Details</a>
                 </div>
             </div>
-
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition border border-stone-200">
                 <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover">
                 <div class="p-8">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-2xl font-bold text-gray-900 font-serif">Somatheeram Ayurveda Village</h3>
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">NABH Accredited</span>
-                    </div>
+                    <div class="flex justify-between items-start mb-2"><h3 class="text-2xl font-bold text-gray-900 font-serif">Somatheeram Ayurveda</h3><span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">NABH Accredited</span></div>
                     <p class="text-gray-600 mb-4">The world's first Ayurveda Resort. Famous for its authentic Panchakarma treatments and medicinal herbal gardens by the sea.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Panchakarma</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Arthritis Care</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Anti-Aging</span>
-                    </div>
-                    <div class="flex items-center text-gray-500 text-sm mb-6">
-                        <i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Kerala, India
-                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Panchakarma</span><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Arthritis Care</span></div>
+                    <div class="flex items-center text-gray-500 text-sm mb-6"><i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Kerala, India</div>
                     <a href="contact.html" class="block text-center bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition">Request Package Details</a>
                 </div>
             </div>
-
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition border border-stone-200">
                 <img src="https://images.unsplash.com/photo-1596178060819-385064846f7c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover">
                 <div class="p-8">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-2xl font-bold text-gray-900 font-serif">Vana Retreat</h3>
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Holistic</span>
-                    </div>
+                    <div class="flex justify-between items-start mb-2"><h3 class="text-2xl font-bold text-gray-900 font-serif">Vana Retreat</h3><span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Holistic</span></div>
                     <p class="text-gray-600 mb-4">A refuge for all beings. Vana focuses on Sowa Rigpa (Tibetan Healing), Ayurveda, and Yoga in a strict, serene environment.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Tibetan Healing</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Silent Retreat</span>
-                    </div>
-                    <div class="flex items-center text-gray-500 text-sm mb-6">
-                        <i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Dehradun, Uttarakhand
-                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Tibetan Healing</span><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Silent Retreat</span></div>
+                    <div class="flex items-center text-gray-500 text-sm mb-6"><i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Dehradun, Uttarakhand</div>
                     <a href="contact.html" class="block text-center bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition">Request Package Details</a>
                 </div>
             </div>
-
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition border border-stone-200">
                 <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover">
                 <div class="p-8">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-2xl font-bold text-gray-900 font-serif">Jindal Naturecure Institute</h3>
-                        <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Naturopathy</span>
-                    </div>
+                    <div class="flex justify-between items-start mb-2"><h3 class="text-2xl font-bold text-gray-900 font-serif">Jindal Naturecure</h3><span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full uppercase tracking-wide">Naturopathy</span></div>
                     <p class="text-gray-600 mb-4">India's leading naturopathy hospital. Drug-less therapy focusing on diet, yoga, and natural treatments for chronic ailments.</p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Drugless Therapy</span>
-                        <span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Diet Cures</span>
-                    </div>
-                    <div class="flex items-center text-gray-500 text-sm mb-6">
-                        <i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Bangalore, Karnataka
-                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Drugless Therapy</span><span class="px-3 py-1 bg-stone-100 text-stone-600 text-xs rounded-full">Diet Cures</span></div>
+                    <div class="flex items-center text-gray-500 text-sm mb-6"><i class="fas fa-map-marker-alt mr-2 text-green-600"></i> Bangalore, Karnataka</div>
                     <a href="contact.html" class="block text-center bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition">Request Package Details</a>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <footer class="bg-gray-900 text-white py-8 text-center">
-        <p>&copy; 2025 TreatInt. All Rights Reserved.</p>
-    </footer>
+    <a href="https://wa.me/917039196489?text=Hello%20TreatInt,%20I%20need%20assistance." target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center animate-bounce" style="width: 60px; height: 60px;">
+        <i class="fab fa-whatsapp text-4xl"></i>
+    </a>
+
+    <footer class="bg-gray-900 text-white py-8 text-center"><p>&copy; 2025 TreatInt. All Rights Reserved.</p></footer>
+
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+    </script>
 
 </body>
 </html>
