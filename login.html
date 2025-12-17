@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Login | TreatInt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-3xl font-bold text-blue-900">
+                        <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
+                    <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
+                    <a href="ayush.html" class="text-green-700 hover:text-green-900 font-bold">AYUSH Centers</a>
+                    <a href="empanel.html" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
+                        Get Free Quote
+                    </a>
+                    <a href="login.html" class="text-blue-900 font-bold flex items-center border-b-2 border-blue-900">
+                        <i class="fas fa-user-circle text-xl mr-2"></i> Login
+                    </a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg z-50">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Treatments</a>
+                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Hospitals</a>
+                <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
+                <a href="empanel.html" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
+                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
+                <a href="login.html" class="block px-3 py-3 text-base font-medium text-gray-500 bg-gray-100">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="h-20"></div>
+
+    <div class="min-h-[calc(100vh-80px)] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-w-4xl w-full">
+            
+            <div class="md:w-1/2 bg-blue-900 relative hidden md:block">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                <div class="relative z-10 p-12 flex flex-col justify-center h-full text-white">
+                    <h2 class="text-4xl font-bold mb-4">Welcome Back</h2>
+                    <p class="text-lg opacity-90">Access your dashboard to manage patients, track commissions, and update hospital profiles.</p>
+                    <div class="mt-8">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i> <span>Secure Data Access</span>
+                        </div>
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i> <span>Real-time Tracking</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i> <span>24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                <div class="text-center md:text-left mb-8">
+                    <h1 class="text-3xl font-bold text-gray-800">Partner Login</h1>
+                    <p class="text-gray-500 mt-2">Please enter your credentials</p>
+                </div>
+
+                <form>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Email Address or Agent ID</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input type="text" class="w-full pl-10 pr-3 py-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50" placeholder="name@company.com">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-bold mb-2 text-sm">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" class="w-full pl-10 pr-3 py-3 border rounded-lg focus:outline-none focus:border-blue-500 bg-gray-50" placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-6">
+                        <label class="flex items-center text-sm text-gray-600 cursor-pointer">
+                            <input type="checkbox" class="mr-2"> Remember me
+                        </label>
+                        <a href="#" class="text-sm text-blue-600 hover:underline font-semibold">Forgot Password?</a>
+                    </div>
+
+                    <button type="button" class="w-full bg-blue-900 text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition shadow-lg mb-6">
+                        Login
+                    </button>
+
+                    <div class="text-center text-sm text-gray-500">
+                        Not a partner yet? <a href="agent.html" class="text-blue-600 font-bold hover:underline">Register as Agent</a> or <a href="empanel.html" class="text-blue-600 font-bold hover:underline">Empanel Hospital</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+    </script>
+
+</body>
+</html>
