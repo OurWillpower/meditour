@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Case File | TreatInt</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="dashboard-hospital.html" class="text-blue-900 font-bold text-lg hover:text-blue-700">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Queue
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right hidden md:block">
+                        <div class="font-bold text-gray-800">Apollo Hospital (Delhi)</div>
+                        <div class="text-xs text-green-600 font-bold">International Patient Dept.</div>
+                    </div>
+                    <div class="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold">AH</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">Amit Kumar <span class="text-lg text-gray-500 font-normal">| P-2025-889</span></h1>
+                <p class="text-blue-600 font-bold"><i class="fas fa-map-marker-alt mr-1"></i> Bangladesh</p>
+            </div>
+            <div class="flex gap-3 mt-4 md:mt-0">
+                <button onclick="alert('Query sent to Partner')" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-bold hover:bg-gray-50">
+                    <i class="fas fa-question-circle mr-2"></i> Request Info
+                </button>
+                <button onclick="alert('Admission Process Started')" class="bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-700 shadow-lg">
+                    <i class="fas fa-check mr-2"></i> Accept & Admit
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="space-y-6">
+                
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="font-bold text-gray-800 border-b pb-2 mb-4">Patient Demographics</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Age/Gender</span> <span class="font-bold">45 / Male</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Passport</span> <span class="font-bold">A12345678</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Contact</span> <span class="font-bold">+880 1712 345678</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Language</span> <span class="font-bold">Bengali, English</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                    <h3 class="font-bold text-gray-800 border-b pb-2 mb-4">Referred By</h3>
+                    <div class="flex items-center mb-3">
+                        <div class="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold mr-3">RM</div>
+                        <div>
+                            <p class="font-bold text-sm">Rahul Medical Services</p>
+                            <p class="text-xs text-gray-500">Verified Partner • Dhaka</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/" target="_blank" class="block w-full bg-green-50 text-green-700 text-center py-2 rounded border border-green-200 text-sm font-bold hover:bg-green-100">
+                        <i class="fab fa-whatsapp mr-2"></i> Chat with Partner
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 space-y-6">
+                
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="font-bold text-gray-800 border-b pb-2 mb-4"><i class="fas fa-stethoscope text-red-500 mr-2"></i> Clinical Summary</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            "Patient diagnosed with Grade 3 Osteoarthritis in both knees. Experiencing difficulty walking and severe pain for the last 2 years. Diabetic (Type 2) controlled on medication. Seeking Bilateral Total Knee Replacement."
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-bold">Orthopedics</span>
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-bold">Diabetic</span>
+                        <span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full font-bold">Surgical</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center border-b pb-2 mb-4">
+                        <h3 class="font-bold text-gray-800"><i class="fas fa-folder-open text-yellow-500 mr-2"></i> Attached Documents</h3>
+                        <button class="text-xs text-blue-600 font-bold hover:underline">Download All</button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">X-Ray_Knees_AP_View.pdf</p>
+                                    <p class="text-xs text-gray-500">2.4 MB • Uploaded Today</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-blue-600"><i class="fas fa-eye"></i></button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-image text-blue-500 text-xl mr-3"></i>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">Blood_Sugar_Report.jpg</p>
+                                    <p class="text-xs text-gray-500">1.1 MB • Uploaded Today</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-blue-600"><i class="fas fa-eye"></i></button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition">
+                            <div class="flex items-center">
+                                <i class="fas fa-passport text-green-600 text-xl mr-3"></i>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">Patient_Passport_Copy.pdf</p>
+                                    <p class="text-xs text-gray-500">0.8 MB • Verified</p>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-blue-600"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
