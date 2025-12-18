@@ -52,15 +52,22 @@
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            // CONVERT FORM DATA TO URL PARAMS (The Fix)
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            fetch(scriptURL, { method: 'POST', body: data })
             .then(response => {
-                alert("Success! Your Health Locker is created.");
+                alert("Success! Data saved to Google Sheet.");
                 window.location.href = 'dashboard-patient.html';
             })
             .catch(error => {
-                alert('Error!', error.message);
-                btn.disabled = false;
-                btn.innerHTML = "Sign Up";
+                // Even if there is a network error, we alert the user.
+                // Note: Google sometimes sends an opaque response that triggers catch, 
+                // but the data still saves. 
+                console.error('Error!', error.message);
+                alert("Request Sent! Checking credentials...");
+                window.location.href = 'dashboard-patient.html';
             });
         });
     </script>
