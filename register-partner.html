@@ -16,25 +16,27 @@
             <p class="text-gray-500 text-sm">Start earning commissions today</p>
         </div>
 
-        <form onsubmit="event.preventDefault(); alert('Application Submitted! Redirecting...'); window.location.href='dashboard-partner.html';">
+        <form id="partnerForm">
+            <input type="hidden" name="action" value="register-partner">
+
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Your Name</label>
-                    <input type="text" class="w-full border p-2 rounded" required>
+                    <input type="text" name="Name" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Agency Name (Optional)</label>
-                    <input type="text" class="w-full border p-2 rounded">
+                    <input type="text" name="Agency" class="w-full border p-2 rounded">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">WhatsApp Number</label>
-                    <input type="text" class="w-full border p-2 rounded" required>
+                    <input type="text" name="WhatsApp" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Create Password</label>
-                    <input type="password" class="w-full border p-2 rounded" required>
+                    <input type="password" name="Password" class="w-full border p-2 rounded" required>
                 </div>
-                <button class="w-full bg-green-700 text-white font-bold py-3 rounded hover:bg-green-800">
+                <button type="submit" id="submitBtn" class="w-full bg-green-700 text-white font-bold py-3 rounded hover:bg-green-800 transition">
                     Register Partner Account
                 </button>
             </div>
@@ -43,6 +45,29 @@
             Already a partner? <a href="login.html" class="text-green-700 font-bold">Login</a>
         </p>
     </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyXqa0xST3Ft1CYuDRBHYi-QlROwaNErk7a23ESuXUwWmAHOX6oupoSz86GdU4HHMWNlg/exec';
+        const form = document.getElementById('partnerForm');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "Processing...";
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                alert("Partner Application Submitted Successfully!");
+                window.location.href = 'dashboard-partner.html';
+            })
+            .catch(error => {
+                alert('Error!', error.message);
+                btn.disabled = false;
+                btn.innerHTML = "Register Partner Account";
+            });
+        });
+    </script>
 
 </body>
 </html>
