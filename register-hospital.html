@@ -16,25 +16,27 @@
             <p class="text-gray-500 text-sm">Join our global network</p>
         </div>
 
-        <form onsubmit="event.preventDefault(); alert('Request sent for verification.'); window.location.href='login.html';">
+        <form id="hospitalForm">
+            <input type="hidden" name="action" value="register-hospital">
+
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Hospital Name</label>
-                    <input type="text" class="w-full border p-2 rounded" required>
+                    <input type="text" name="HospitalName" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">City</label>
-                    <input type="text" class="w-full border p-2 rounded" required>
+                    <input type="text" name="City" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Official Email</label>
-                    <input type="email" class="w-full border p-2 rounded" required>
+                    <input type="email" name="Email" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Create Admin Password</label>
-                    <input type="password" class="w-full border p-2 rounded" required>
+                    <input type="password" name="Password" class="w-full border p-2 rounded" required>
                 </div>
-                <button class="w-full bg-gray-800 text-white font-bold py-3 rounded hover:bg-gray-900">
+                <button type="submit" id="submitBtn" class="w-full bg-gray-800 text-white font-bold py-3 rounded hover:bg-gray-900 transition">
                     Submit for Verification
                 </button>
             </div>
@@ -43,6 +45,29 @@
             Already verified? <a href="login.html" class="text-gray-800 font-bold">Login</a>
         </p>
     </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyXqa0xST3Ft1CYuDRBHYi-QlROwaNErk7a23ESuXUwWmAHOX6oupoSz86GdU4HHMWNlg/exec';
+        const form = document.getElementById('hospitalForm');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "Processing...";
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                alert("Hospital Request Sent! We will verify your credentials.");
+                window.location.href = 'login.html';
+            })
+            .catch(error => {
+                alert('Error!', error.message);
+                btn.disabled = false;
+                btn.innerHTML = "Submit for Verification";
+            });
+        });
+    </script>
 
 </body>
 </html>
