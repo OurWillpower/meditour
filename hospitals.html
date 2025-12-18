@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e3a8a">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/44/44386.png">
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e3a8a">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3063/3063823.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospitals Directory | TreatInt</title>
@@ -29,22 +23,25 @@
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
+                
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
                     <a href="hospitals.html" class="text-blue-600 font-bold border-b-2 border-blue-600">Hospitals</a>
                     <a href="ayush.html" class="text-green-700 hover:text-green-900 font-bold">AYUSH Centers</a>
-                    <a href="empanel.html" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
+                    <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
                     </a>
-                    <a href="login.html" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
+                    <a href="#" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
+
                 <div class="md:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-700 hover:text-blue-600 focus:outline-none">
                         <i class="fas fa-bars text-3xl"></i>
                     </button>
                 </div>
@@ -55,9 +52,9 @@
                 <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Treatments</a>
                 <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold bg-blue-50">Hospitals</a>
                 <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
-                <a href="empanel.html" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
                 <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
-                <a href="login.html" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
             </div>
         </div>
     </nav>
@@ -66,16 +63,18 @@
 
     <div class="bg-blue-900 text-white py-12 text-center">
         <h1 class="text-3xl md:text-4xl font-bold mb-2">Find the Best Hospital</h1>
-        <p class="opacity-80">Filter by City or Specialization</p>
+        <p class="opacity-80">Search by Name, City, or Specialty (e.g., "Cancer Mumbai")</p>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+        
         <div class="md:w-1/4">
             <div class="bg-white p-6 rounded-xl shadow-md sticky top-24">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-lg text-gray-800"><i class="fas fa-filter text-blue-500 mr-2"></i> Filters</h3>
                     <button onclick="resetFilters()" class="text-xs text-red-500 font-semibold hover:underline">Reset</button>
                 </div>
+                
                 <div class="mb-6">
                     <h4 class="font-bold text-sm text-gray-600 mb-2 uppercase">By City</h4>
                     <div class="space-y-2">
@@ -85,6 +84,7 @@
                         <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" class="filter-checkbox city-filter" value="rishikesh"> <span>Rishikesh</span></label>
                     </div>
                 </div>
+
                 <div>
                     <h4 class="font-bold text-sm text-gray-600 mb-2 uppercase">By Specialty</h4>
                     <div class="space-y-2">
@@ -100,11 +100,12 @@
         <div class="md:w-3/4">
             <p id="result-count" class="text-gray-500 text-sm mb-4">Showing all hospitals</p>
             <div class="grid grid-cols-1 gap-6" id="hospital-grid">
+                
                 <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="delhi chennai" data-spec="oncology cardiology transplant">
                     <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1587351021759-3e566b9af923?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
                         <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Apollo Hospitals</h3><span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span></div>
-                        <p class="text-gray-600 text-sm mt-2">Premium care for Oncology & Transplants.</p>
+                        <p class="text-gray-600 text-sm mt-2">Premium care for Oncology (Cancer) & Transplants.</p>
                         <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Delhi, Chennai</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
@@ -112,9 +113,9 @@
                 <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="delhi" data-spec="transplant cardiology">
                     <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Medanta</h3><span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span></div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Medanta - The Medicity</h3><span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">JCI</span></div>
                         <p class="text-gray-600 text-sm mt-2">World leader in Liver Transplants & Heart Surgery.</p>
-                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Gurgaon</div>
+                        <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Gurgaon (Delhi)</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
@@ -130,46 +131,102 @@
                 <div class="hospital-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row border hover:shadow-lg" data-city="rishikesh" data-spec="ayurveda">
                     <div class="md:w-1/3"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"></div>
                     <div class="md:w-2/3 p-6">
-                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Ananda</h3><span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Luxury</span></div>
+                        <div class="flex justify-between"><h3 class="text-xl font-bold text-gray-900">Ananda in the Himalayas</h3><span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Luxury</span></div>
                         <p class="text-gray-600 text-sm mt-2">World's best luxury Ayurveda & Detox retreat.</p>
                         <div class="mt-3 text-xs text-gray-500 font-semibold uppercase tracking-wide"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> Rishikesh</div>
                         <a href="contact.html" class="mt-4 inline-block text-blue-600 font-bold text-sm hover:underline">Get Quote &rarr;</a>
                     </div>
                 </div>
             </div>
+            
             <div id="no-results" class="hidden text-center py-12">
                 <i class="fas fa-search text-gray-300 text-4xl mb-4"></i>
-                <p class="text-gray-500">No hospitals match your selected filters.</p>
+                <p class="text-gray-500">No hospitals found matching your search.</p>
                 <button onclick="resetFilters()" class="text-blue-600 font-bold mt-2">Clear Filters</button>
             </div>
         </div>
     </div>
 
-    <a href="https://wa.me/917039196489?text=Hello%20TreatInt,%20I%20need%20assistance." target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center animate-bounce" style="width: 60px; height: 60px;">
-        <i class="fab fa-whatsapp text-4xl"></i>
-    </a>
-
     <script>
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         const checkboxes = document.querySelectorAll('.filter-checkbox');
         const cards = document.querySelectorAll('.hospital-card');
         const noResults = document.getElementById('no-results');
         const countText = document.getElementById('result-count');
-        checkboxes.forEach(box => { box.addEventListener('change', filterHospitals); });
-        function filterHospitals() {
+
+        // 1. RUN ON LOAD: Check for URL Search Params
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            
+            if(searchQuery) {
+                filterByText(searchQuery);
+                checkboxes.forEach(cb => cb.checked = false); // Uncheck sidebar to avoid confusion
+            }
+        }
+
+        // 2. TEXT SEARCH LOGIC (Multi-word support: "Cancer Mumbai")
+        function filterByText(query) {
+            const terms = query.toLowerCase().split(' ').filter(term => term.length > 0); // Split by space
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                // Check if EVERY search term is present in the card
+                const isMatch = terms.every(term => text.includes(term));
+                
+                if(isMatch) {
+                    card.classList.remove('hidden-card');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden-card');
+                }
+            });
+
+            updateUI(visibleCount, `Search results for "${query}"`);
+        }
+
+        // 3. SIDEBAR LOGIC (Existing)
+        checkboxes.forEach(box => {
+            box.addEventListener('change', filterByCheckbox);
+        });
+
+        function filterByCheckbox() {
             const selectedCities = Array.from(document.querySelectorAll('.city-filter:checked')).map(cb => cb.value);
             const selectedSpecs = Array.from(document.querySelectorAll('.spec-filter:checked')).map(cb => cb.value);
             let visibleCount = 0;
+
             cards.forEach(card => {
                 const cardCities = card.getAttribute('data-city');
                 const cardSpecs = card.getAttribute('data-spec');
                 const cityMatch = selectedCities.length === 0 || selectedCities.some(city => cardCities.includes(city));
                 const specMatch = selectedSpecs.length === 0 || selectedSpecs.some(spec => cardSpecs.includes(spec));
-                if (cityMatch && specMatch) { card.classList.remove('hidden-card'); visibleCount++; } else { card.classList.add('hidden-card'); }
+
+                if (cityMatch && specMatch) {
+                    card.classList.remove('hidden-card');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden-card');
+                }
             });
-            if (visibleCount === 0) { noResults.classList.remove('hidden'); countText.innerText = "No hospitals found"; } else { noResults.classList.add('hidden'); countText.innerText = `Showing ${visibleCount} hospitals`; }
+
+            updateUI(visibleCount, `Showing ${visibleCount} hospitals`);
         }
-        function resetFilters() { checkboxes.forEach(cb => cb.checked = false); filterHospitals(); }
+
+        function updateUI(count, message) {
+            if (count === 0) {
+                noResults.classList.remove('hidden');
+                countText.innerText = "No hospitals found";
+            } else {
+                noResults.classList.add('hidden');
+                countText.innerText = message;
+            }
+        }
+
+        function resetFilters() {
+            checkboxes.forEach(cb => cb.checked = false);
+            filterByCheckbox(); // Resets to show all
+            window.history.pushState({}, document.title, window.location.pathname); // Clean URL
+        }
     </script>
 
 </body>
