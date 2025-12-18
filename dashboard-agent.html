@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Portal | TreatInt</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-blue-900 font-bold text-xl"><i class="fas fa-briefcase mr-2"></i> Partner Portal</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right hidden md:block">
+                        <div class="font-bold text-gray-800">Rahul Agency (Dhaka)</div>
+                        <div class="text-xs text-green-600 font-bold">Verified Partner</div>
+                    </div>
+                    <div class="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold">RA</div>
+                    <a href="index.html" class="text-sm text-gray-500 hover:text-red-500"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
+                <p class="text-gray-500">Welcome back, Rahul. Here is your performance report.</p>
+            </div>
+            <button onclick="alert('Open New Patient Form')" class="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg font-bold shadow-lg hover:bg-blue-700 transition">
+                <i class="fas fa-plus-circle mr-2"></i> Refer New Patient
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Total Patients</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1">12</h3>
+                    </div>
+                    <div class="p-2 bg-blue-50 text-blue-500 rounded-lg"><i class="fas fa-users text-xl"></i></div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Earnings (USD)</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1">$2,450</h3>
+                    </div>
+                    <div class="p-2 bg-green-50 text-green-500 rounded-lg"><i class="fas fa-wallet text-xl"></i></div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Pending Payout</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1">$450</h3>
+                    </div>
+                    <div class="p-2 bg-yellow-50 text-yellow-500 rounded-lg"><i class="fas fa-clock text-xl"></i></div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-purple-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Conversion Rate</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1">85%</h3>
+                    </div>
+                    <div class="p-2 bg-purple-50 text-purple-500 rounded-lg"><i class="fas fa-chart-line text-xl"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="font-bold text-gray-800">Active Referrals</h3>
+                <input type="text" placeholder="Search Patient..." class="text-sm border rounded-lg px-3 py-1 outline-none focus:border-blue-500">
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-600 text-sm uppercase tracking-wider">
+                            <th class="px-6 py-3">Patient Name</th>
+                            <th class="px-6 py-3">Treatment</th>
+                            <th class="px-6 py-3">Hospital</th>
+                            <th class="px-6 py-3">Status</th>
+                            <th class="px-6 py-3">Commission</th>
+                            <th class="px-6 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                        <tr class="hover:bg-blue-50 transition">
+                            <td class="px-6 py-4 font-bold text-blue-900">Mr. Amit Kumar</td>
+                            <td class="px-6 py-4">Knee Replacement</td>
+                            <td class="px-6 py-4">Apollo, Delhi</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold">Visa Processing</span></td>
+                            <td class="px-6 py-4 text-green-600 font-bold">$200 (Pending)</td>
+                            <td class="px-6 py-4"><button class="text-blue-600 hover:underline">View</button></td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition">
+                            <td class="px-6 py-4 font-bold text-blue-900">Mrs. Fatima Begum</td>
+                            <td class="px-6 py-4">Liver Transplant</td>
+                            <td class="px-6 py-4">Medanta, Gurgaon</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">Admitted</span></td>
+                            <td class="px-6 py-4 text-green-600 font-bold">$1,500 (Paid)</td>
+                            <td class="px-6 py-4"><button class="text-blue-600 hover:underline">View</button></td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition">
+                            <td class="px-6 py-4 font-bold text-blue-900">Mr. John Doe</td>
+                            <td class="px-6 py-4">Cosmetic Surgery</td>
+                            <td class="px-6 py-4">Fortis, Mumbai</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold">Discharged</span></td>
+                            <td class="px-6 py-4 text-green-600 font-bold">$300 (Paid)</td>
+                            <td class="px-6 py-4"><button class="text-blue-600 hover:underline">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-6 py-4 bg-gray-50 border-t text-center text-xs text-gray-500">
+                Showing 3 of 12 active patients
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
