@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration | TreatInt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-blue-50 h-screen flex items-center justify-center">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-blue-900">Create Health Locker</h1>
+            <p class="text-gray-500 text-sm">Securely store your medical records</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Account Created! Redirecting...'); window.location.href='dashboard-patient.html';">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Full Name</label>
+                    <input type="text" class="w-full border p-2 rounded" required placeholder="Name as on Passport">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Mobile Number</label>
+                    <input type="text" class="w-full border p-2 rounded" required placeholder="+91...">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700">Create Password</label>
+                    <input type="password" class="w-full border p-2 rounded" required>
+                </div>
+                <button class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+        <p class="text-center text-sm mt-4">
+            Already have an account? <a href="login.html" class="text-blue-600 font-bold">Login</a>
+        </p>
+    </div>
+
+</body>
+</html>
