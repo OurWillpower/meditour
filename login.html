@@ -73,7 +73,7 @@
 
                 <div class="text-center flex justify-between text-sm mt-4">
                     <a href="#" class="text-gray-500 hover:text-blue-900">Forgot Password?</a>
-                    <a href="contact.html" class="text-blue-600 font-bold hover:underline">New User? Register</a>
+                    <a href="register-patient.html" id="register-link" class="text-blue-600 font-bold hover:underline">New User? Register</a>
                 </div>
             </form>
         </div>
@@ -89,27 +89,37 @@
             document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-' + role).classList.add('active');
 
-            // Update UI Text
+            // Update UI Text & Links
             const title = document.getElementById('form-title');
             const label = document.getElementById('user-label');
             const heroTitle = document.getElementById('hero-title');
             const heroText = document.getElementById('hero-text');
+            const regLink = document.getElementById('register-link');
 
             if(role === 'patient') {
                 title.innerText = "Patient Login";
                 label.innerText = "Mobile Number / Patient ID";
                 heroTitle.innerText = "Your Health Locker";
                 heroText.innerText = "Access your medical records, prescriptions, and priority support in one place.";
-            } else if(role === 'partner') { // CHANGED FROM AGENT TO PARTNER
+                // Dynamic Link Change
+                regLink.href = "register-patient.html";
+                regLink.innerText = "New Patient? Create Locker";
+            } else if(role === 'partner') { 
                 title.innerText = "Partner Login";
                 label.innerText = "Partner ID / Email";
                 heroTitle.innerText = "Grow Your Business";
                 heroText.innerText = "Track your referrals, monitor visa status, and view your earnings dashboard.";
+                // Dynamic Link Change
+                regLink.href = "register-partner.html";
+                regLink.innerText = "New? Join Partner Network";
             } else {
                 title.innerText = "Hospital/Lab Login";
                 label.innerText = "Empanelment ID";
                 heroTitle.innerText = "Provider Portal";
                 heroText.innerText = "View incoming international patients and access verified medical history.";
+                // Dynamic Link Change
+                regLink.href = "register-hospital.html";
+                regLink.innerText = "New Hospital? Empanel Now";
             }
         }
 
@@ -118,10 +128,8 @@
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
 
-            // Simple Demo Logic
-            // The password is '123' for everyone
+            // Demo Logic
             if(user === currentRole && pass === "123") {
-                // Redirect to the specific dashboard
                 window.location.href = "dashboard-" + currentRole + ".html";
             } else {
                 alert("Demo Login:\nUser: " + currentRole + "\nPass: 123");
