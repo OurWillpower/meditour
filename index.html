@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TreatInt | Global Medical Marketplace</title>
     
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e3a8a">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/44/44386.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         body { font-family: 'Poppins', sans-serif; }
         .slider-container { position: relative; height: 100vh; overflow: hidden; }
@@ -32,70 +33,90 @@
     <nav class="bg-white shadow-md fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
+                
                 <div class="flex items-center">
                     <a href="index.html" class="text-3xl font-bold text-blue-900">
                         <i class="fas fa-globe-americas text-blue-500"></i> Treat<span class="text-blue-500">Int</span>
                     </a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="treatments.html" class="text-gray-700 hover:text-blue-600 font-medium">Treatments</a>
                     <a href="hospitals.html" class="text-gray-700 hover:text-blue-600 font-medium">Hospitals</a>
                     <a href="ayush.html" class="text-green-700 hover:text-green-900 font-bold">AYUSH Centers</a>
-                    <a href="empanel.html" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
+                    <a href="#" class="text-blue-900 font-medium border-b-2 border-transparent hover:border-blue-900">Empanel With Us</a>
                 </div>
+
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
                     </a>
-                    <a href="login.html" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
+                    <a href="#" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
+
                 <div class="md:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-700 hover:text-blue-600 focus:outline-none">
                         <i class="fas fa-bars text-3xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg z-50">
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t absolute w-full left-0 shadow-lg">
             <div class="px-4 pt-2 pb-4 space-y-1">
-                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Treatments</a>
-                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:bg-gray-50">Hospitals</a>
-                <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50">AYUSH Centers</a>
-                <a href="empanel.html" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50">Empanel With Us</a>
-                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
-                <a href="login.html" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
+                <a href="treatments.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">Treatments</a>
+                <a href="hospitals.html" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">Hospitals</a>
+                <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700 hover:bg-gray-50 rounded-md">AYUSH Centers</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900 hover:bg-gray-50 rounded-md">Empanel With Us</a>
+                <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold hover:bg-gray-50 rounded-md">Get Free Quote</a>
+                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500 hover:text-blue-900 hover:bg-gray-50 rounded-md">Login</a>
             </div>
         </div>
     </nav>
 
     <header class="slider-container">
         <div class="slide active fade" style="background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="slide-content max-w-4xl"><h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Healthcare Without Borders</h1><p class="text-lg md:text-2xl drop-shadow-md">Connecting you to the best care globally.</p></div>
+            <div class="slide-content max-w-4xl">
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Healthcare Without Borders</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Connecting you to the best care globally.</p>
+            </div>
         </div>
         <div class="slide slide-left" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="slide-content max-w-4xl"><h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Advanced Surgical Excellence</h1><p class="text-lg md:text-2xl drop-shadow-md">Top Surgeons for Cardiac & Neuro.</p></div>
+            <div class="slide-content max-w-4xl">
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Advanced Surgical Excellence</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Top Surgeons for Cardiac & Neuro.</p>
+            </div>
         </div>
         <div class="slide zoom-in" style="background-image: url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="slide-content max-w-4xl"><h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Holistic Healing</h1><p class="text-lg md:text-2xl drop-shadow-md">Ancient Ayurveda meets modern wellness.</p></div>
+            <div class="slide-content max-w-4xl">
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Holistic Healing</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Ancient Ayurveda meets modern wellness.</p>
+            </div>
         </div>
         <div class="slide slide-up" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="slide-content max-w-4xl"><h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Seamless Travel</h1><p class="text-lg md:text-2xl drop-shadow-md">We handle your Visa, Flights, and Stay.</p></div>
+            <div class="slide-content max-w-4xl">
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Seamless Travel</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">We handle your Visa, Flights, and Stay.</p>
+            </div>
         </div>
         <div class="slide slide-right" style="background-image: url('https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="slide-content max-w-4xl"><h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Patient-First Care</h1><p class="text-lg md:text-2xl drop-shadow-md">Your comfort is our priority.</p></div>
+            <div class="slide-content max-w-4xl">
+                <h1 class="text-3xl md:text-6xl font-bold mb-4 drop-shadow-lg leading-tight">Patient-First Care</h1>
+                <p class="text-lg md:text-2xl drop-shadow-md">Your comfort is our priority.</p>
+            </div>
         </div>
 
         <div class="absolute bottom-10 left-0 w-full z-50 flex justify-center px-4">
             <div class="bg-white p-3 rounded-lg shadow-2xl flex flex-col gap-3 w-full max-w-md">
                 <div class="flex items-center border-b border-gray-300 px-2 py-1">
                     <i class="fas fa-stethoscope text-gray-400 mr-3"></i>
-                    <input type="text" placeholder="Treatment (e.g., IVF)" class="w-full outline-none text-gray-700">
+                    <input type="text" placeholder="Treatment..." class="w-full outline-none text-gray-700">
                 </div>
                 <div class="flex items-center border-b border-gray-300 px-2 py-1">
                     <i class="fas fa-map-marker-alt text-gray-400 mr-3"></i>
-                    <input type="text" placeholder="Country (e.g., India)" class="w-full outline-none text-gray-700">
+                    <input type="text" placeholder="Country..." class="w-full outline-none text-gray-700">
                 </div>
                 <a href="contact.html" class="bg-blue-600 text-white text-center py-3 rounded-md font-bold hover:bg-blue-700 shadow-md">SEARCH</a>
             </div>
@@ -126,14 +147,7 @@
 
     <footer class="bg-gray-900 text-white py-8 text-center"><p>&copy; 2025 TreatInt. All Rights Reserved.</p></footer>
 
-    <a href="https://wa.me/917039196489?text=Hello%20TreatInt,%20I%20need%20assistance." target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl hover:bg-green-600 transition z-50 flex items-center justify-center animate-bounce" style="width: 60px; height: 60px;">
-        <i class="fab fa-whatsapp text-4xl"></i>
-    </a>
-
     <script>
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         const totalSlides = slides.length;
