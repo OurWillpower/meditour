@@ -34,7 +34,7 @@
                     <a href="contact.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition font-semibold shadow-lg text-sm">
                         Get Free Quote
                     </a>
-                    <a href="#" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
+                    <a href="login.html" class="text-gray-500 hover:text-blue-900 font-semibold flex items-center">
                         <i class="fas fa-user-circle text-xl mr-2"></i> Login
                     </a>
                 </div>
@@ -52,7 +52,7 @@
                 <a href="ayush.html" class="block px-3 py-3 text-base font-bold text-green-700">AYUSH Centers</a>
                 <a href="#" class="block px-3 py-3 text-base font-medium text-blue-900">Empanel With Us</a>
                 <a href="contact.html" class="block px-3 py-3 text-base font-medium text-blue-600 font-bold">Get Free Quote</a>
-                <a href="#" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
+                <a href="login.html" class="block px-3 py-3 text-base font-medium text-gray-500">Login</a>
             </div>
         </div>
     </nav>
@@ -169,10 +169,8 @@
             const data = getFormData();
             if(!data.name) { alert("Please enter your name"); return; }
             
-            // Format the message
             const text = `*New Quote Request* %0A%0A*Name:* ${data.name}%0A*Country:* ${data.country}%0A*Phone:* ${data.phone}%0A*Service:* ${data.service}%0A*Note:* ${data.message}`;
             
-            // Open WhatsApp (Replace 919876543210 with your actual business number)
             window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
         }
 
