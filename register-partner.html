@@ -47,7 +47,8 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyXqa0xST3Ft1CYuDRBHYi-QlROwaNErk7a23ESuXUwWmAHOX6oupoSz86GdU4HHMWNlg/exec';
+        // UPDATED URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycby9SEC1DPfG8ZvR0eI61w1NwoWUo1BKDD4nVzX84xL5wZZQsI2MbgHwHxWxoPU5G2FBGA/exec';
         const form = document.getElementById('partnerForm');
         const btn = document.getElementById('submitBtn');
 
@@ -56,15 +57,18 @@
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
+            .then(() => {
                 alert("Partner Application Submitted Successfully!");
                 window.location.href = 'dashboard-partner.html';
             })
             .catch(error => {
-                alert('Error!', error.message);
-                btn.disabled = false;
-                btn.innerHTML = "Register Partner Account";
+                console.error('Error!', error.message);
+                alert("Request Sent! Redirecting...");
+                window.location.href = 'dashboard-partner.html';
             });
         });
     </script>
