@@ -43,7 +43,8 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyXqa0xST3Ft1CYuDRBHYi-QlROwaNErk7a23ESuXUwWmAHOX6oupoSz86GdU4HHMWNlg/exec';
+        // UPDATED URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycby9SEC1DPfG8ZvR0eI61w1NwoWUo1BKDD4nVzX84xL5wZZQsI2MbgHwHxWxoPU5G2FBGA/exec';
         const form = document.getElementById('patientForm');
         const btn = document.getElementById('submitBtn');
 
@@ -52,18 +53,15 @@
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            // Use URLSearchParams for simple text data
             const formData = new FormData(form);
             const data = new URLSearchParams(formData);
 
-            // 'no-cors' mode allows the request to reach Google without a security block
             fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
             .then(() => {
                 alert("Success! Your Health Locker is created.");
                 window.location.href = 'dashboard-patient.html';
             })
             .catch(error => {
-                // If it fails, we assume it worked (because no-cors hides status) and redirect
                 console.error('Error!', error.message);
                 alert("Request Sent! Redirecting...");
                 window.location.href = 'dashboard-patient.html';
