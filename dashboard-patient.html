@@ -87,11 +87,9 @@
     </div>
 
     <script>
-        // Check for stored name
         const storedName = localStorage.getItem('currentUser');
         
         if (storedName) {
-            // Replace text
             document.getElementById('display-name').innerText = storedName;
             document.getElementById('welcome-name').innerText = storedName;
         } else {
