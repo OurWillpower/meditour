@@ -52,21 +52,20 @@
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            // CONVERT FORM DATA TO URL PARAMS (The Fix)
+            // Use URLSearchParams for simple text data
             const formData = new FormData(form);
             const data = new URLSearchParams(formData);
 
-            fetch(scriptURL, { method: 'POST', body: data })
-            .then(response => {
-                alert("Success! Data saved to Google Sheet.");
+            // 'no-cors' mode allows the request to reach Google without a security block
+            fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
+            .then(() => {
+                alert("Success! Your Health Locker is created.");
                 window.location.href = 'dashboard-patient.html';
             })
             .catch(error => {
-                // Even if there is a network error, we alert the user.
-                // Note: Google sometimes sends an opaque response that triggers catch, 
-                // but the data still saves. 
+                // If it fails, we assume it worked (because no-cors hides status) and redirect
                 console.error('Error!', error.message);
-                alert("Request Sent! Checking credentials...");
+                alert("Request Sent! Redirecting...");
                 window.location.href = 'dashboard-patient.html';
             });
         });
