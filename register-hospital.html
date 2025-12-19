@@ -6,6 +6,7 @@
     <title>Hospital Empanelment | TreatInt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
 <body class="bg-gray-100 h-screen flex items-center justify-center">
@@ -17,24 +18,22 @@
         </div>
 
         <form id="hospitalForm">
-            <input type="hidden" name="action" value="register-hospital">
-
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Hospital Name</label>
-                    <input type="text" name="HospitalName" class="w-full border p-2 rounded" required>
+                    <input type="text" id="hName" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">City</label>
-                    <input type="text" name="City" class="w-full border p-2 rounded" required>
+                    <input type="text" id="hCity" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Official Email</label>
-                    <input type="email" name="Email" class="w-full border p-2 rounded" required>
+                    <input type="email" id="hEmail" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Create Admin Password</label>
-                    <input type="password" name="Password" class="w-full border p-2 rounded" required>
+                    <input type="password" id="hPassword" class="w-full border p-2 rounded" required>
                 </div>
                 <button type="submit" id="submitBtn" class="w-full bg-gray-800 text-white font-bold py-3 rounded hover:bg-gray-900 transition">
                     Submit for Verification
@@ -47,30 +46,42 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxemn6bvNrq3my-zed5BavYddXK_cqsiFGSairgJR5xh0DbdDVyiPlwDTcARdI2VjIm/exec';
+        // --- CONFIGURATION ---
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
         const form = document.getElementById('hospitalForm');
         const btn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            const formData = new FormData(form);
-            const data = new URLSearchParams(formData);
+            const hospitalName = document.getElementById('hName').value;
+            const city = document.getElementById('hCity').value;
+            const email = document.getElementById('hEmail').value;
+            const password = document.getElementById('hPassword').value;
 
-            fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
-            .then(() => {
-                alert("Hospital Request Sent! We will verify your credentials.");
-                window.location.href = 'login.html';
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert("Request Sent! Redirecting...");
-                window.location.href = 'login.html';
-            });
+            try {
+                const { data, error } = await _supabase
+                    .from('hospitals') 
+                    .insert([{ hospital_name: hospitalName, city: city, email: email, password: password }]);
+
+                if (error) {
+                    alert("Error: " + error.message);
+                    btn.disabled = false;
+                    btn.innerHTML = "Submit for Verification";
+                } else {
+                    alert("Hospital Request Sent! We will verify your credentials.");
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                alert("Network Error: " + err.message);
+                btn.disabled = false;
+            }
         });
     </script>
-
 </body>
 </html>
