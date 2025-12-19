@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | TreatInt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-blue-50">
+
+    <nav class="bg-blue-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center hover:opacity-80 transition">
+                    <i class="fas fa-heartbeat text-2xl mr-2"></i>
+                    <span class="font-bold text-xl">TreatInt</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <div class="text-right hidden md:block border-l border-blue-700 pl-4">
+                        <div class="font-bold" id="display-name">Welcome</div>
+                        <div class="text-xs text-blue-200">Patient Account</div>
+                    </div>
+                    <button onclick="logout()" class="text-sm bg-red-500 px-3 py-1 rounded hover:bg-red-600 ml-2">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8">What would you like to do?</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <a href="dashboard-patient.html" class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition group cursor-pointer border-t-4 border-blue-500">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-600 transition">
+                    <i class="fas fa-file-medical text-2xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">My Health Locker</h3>
+                <p class="text-gray-500 text-sm">Upload medical records, X-rays, and view your saved documents.</p>
+            </a>
+
+            <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition border-t-4 border-gray-200 opacity-75">
+                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-user text-2xl text-gray-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">My Profile</h3>
+                <p class="text-gray-500 text-sm">Manage your personal details and contact information. (Coming Soon)</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow hover:shadow-lg transition border-t-4 border-gray-200 opacity-75">
+                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-video text-2xl text-gray-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Consultations</h3>
+                <p class="text-gray-500 text-sm">Schedule appointments with international doctors. (Coming Soon)</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('display-name').innerText = currentUser;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
