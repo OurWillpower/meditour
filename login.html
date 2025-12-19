@@ -50,7 +50,6 @@
         const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
         
-        // FIX: Renamed to supabaseClient
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         let currentRole = 'patient';
@@ -96,7 +95,9 @@
 
             let table, idColumn, redirectPage;
             if (currentRole === 'patient') {
-                table = 'patients'; idColumn = 'mobile'; redirectPage = 'dashboard-patient.html';
+                table = 'patients'; 
+                idColumn = 'mobile'; 
+                redirectPage = 'patient-home.html'; // CHANGED: Redirects to new dashboard
             } else if (currentRole === 'partner') {
                 table = 'partners'; idColumn = 'whatsapp'; redirectPage = 'dashboard-partner.html';
             } else {
