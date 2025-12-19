@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard | TreatInt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-gray-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center hover:opacity-80 transition">
+                    <i class="fas fa-hospital text-2xl mr-2"></i>
+                    <span class="font-bold text-xl">TreatInt Hospital</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <div class="text-right hidden md:block border-l border-gray-600 pl-4">
+                        <div class="font-bold" id="display-name">Welcome</div>
+                        <div class="text-xs text-gray-400">Admin Account</div>
+                    </div>
+                    <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded hover:bg-red-700 ml-2">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Hospital Admin Console</h2>
+        <p class="text-gray-500 mb-8">Manage incoming international patients.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <a href="dashboard-hospital.html" class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition group cursor-pointer border-t-4 border-gray-800">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-600 transition">
+                    <i class="fas fa-procedures text-2xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Patient Registry</h3>
+                <p class="text-gray-500 text-sm">View all registered patients, download medical files, and check referrals.</p>
+                <div class="mt-4 text-blue-900 font-bold text-sm group-hover:underline">Access Registry &rarr;</div>
+            </a>
+
+            <div class="bg-white p-8 rounded-xl shadow border-t-4 border-gray-300 opacity-60 grayscale cursor-not-allowed">
+                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-passport text-2xl text-gray-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Visa Desk</h3>
+                <p class="text-gray-500 text-sm">Issue Invitation Letters and track visa applications. (Coming Soon)</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow border-t-4 border-gray-300 opacity-60 grayscale cursor-not-allowed">
+                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-user-md text-2xl text-gray-500"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Doctor Mgmt</h3>
+                <p class="text-gray-500 text-sm">Manage doctor schedules and appointment slots. (Coming Soon)</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('display-name').innerText = currentUser;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
