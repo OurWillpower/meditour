@@ -47,30 +47,26 @@
     </div>
 
     <script>
-        // --- SUPABASE CONFIG ---
         const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // FIX: Renamed to supabaseClient
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // --- TAB LOGIC ---
         let currentRole = 'patient';
 
         function setRole(role) {
             currentRole = role;
-            
-            // Reset styles
             ['patient', 'partner', 'hospital'].forEach(r => {
                 const tab = document.getElementById('tab-' + r);
                 tab.classList.remove('bg-white', 'shadow', 'text-blue-900', 'text-green-800', 'text-gray-800');
                 tab.classList.add('text-gray-500');
             });
 
-            // Set Active Style
             const activeTab = document.getElementById('tab-' + role);
             activeTab.classList.remove('text-gray-500');
             activeTab.classList.add('bg-white', 'shadow');
 
-            // Change Colors & Labels based on role
             const btn = document.getElementById('submitBtn');
             const label = document.getElementById('idLabel');
 
@@ -89,7 +85,6 @@
             }
         }
 
-        // --- LOGIN LOGIC ---
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -99,43 +94,34 @@
             const id = document.getElementById('userId').value;
             const pass = document.getElementById('userPass').value;
 
-            // Define Table and ID Column based on Role
             let table, idColumn, redirectPage;
-
             if (currentRole === 'patient') {
                 table = 'patients'; idColumn = 'mobile'; redirectPage = 'dashboard-patient.html';
             } else if (currentRole === 'partner') {
                 table = 'partners'; idColumn = 'whatsapp'; redirectPage = 'dashboard-partner.html';
             } else {
-                table = 'hospitals'; idColumn = 'email'; redirectPage = 'dashboard-hospital.html'; // Create this page later if needed
+                table = 'hospitals'; idColumn = 'email'; redirectPage = 'dashboard-hospital.html';
             }
 
             try {
-                // Query Database
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from(table)
                     .select('*')
                     .eq(idColumn, id)
                     .eq('password', pass);
 
-                if (error) {
-                    throw error;
-                }
+                if (error) throw error;
 
                 if (data.length > 0) {
-                    // Success
-                    localStorage.setItem('currentUser', data[0].name || data[0].hospital_name); // Save Name
+                    localStorage.setItem('currentUser', data[0].name || data[0].hospital_name);
                     window.location.href = redirectPage;
                 } else {
-                    alert("Invalid ID or Password. Please try again.");
-                    btn.disabled = false;
-                    btn.innerText = "Login";
+                    alert("Invalid ID or Password.");
+                    btn.disabled = false; btn.innerText = "Login";
                 }
-
             } catch (err) {
                 alert("Login Error: " + err.message);
-                btn.disabled = false;
-                btn.innerText = "Login";
+                btn.disabled = false; btn.innerText = "Login";
             }
         });
     </script>
