@@ -15,12 +15,15 @@
     <nav class="bg-green-800 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center">
+                <a href="index.html" class="flex items-center hover:opacity-80 transition">
                     <i class="fas fa-handshake text-2xl mr-2"></i>
                     <span class="font-bold text-xl">TreatInt Partner</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-right hidden md:block">
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-green-200 transition flex items-center gap-2">
+                        <i class="fas fa-home"></i> <span class="hidden md:inline">Home</span>
+                    </a>
+                    <div class="text-right hidden md:block border-l border-green-600 pl-4">
                         <div class="font-bold" id="display-name">Loading...</div>
                         <div class="text-xs text-green-200">Verified Partner</div>
                     </div>
@@ -32,6 +35,14 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8">
         
+        <div class="text-sm text-gray-500 mb-6 flex items-center">
+            <a href="partner-home.html" class="hover:text-green-700 hover:underline transition font-bold text-green-900">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a> 
+            <span class="mx-2">/</span> 
+            <span class="font-bold text-gray-800">Referral Management</span>
+        </div>
+
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-bold text-gray-800">Your Referrals</h2>
             <a href="refer-patient.html" class="bg-green-600 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-green-700 transition inline-flex items-center">
@@ -94,12 +105,10 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // 1. CHECK LOGIN
         const currentPartner = localStorage.getItem('currentUser');
         if (!currentPartner) {
             window.location.href = 'login.html';
@@ -113,10 +122,8 @@
             window.location.href = 'index.html';
         }
 
-        // 2. FETCH REFERRALS & CHECK STATUS
         async function loadReferrals() {
             try {
-                // A. Fetch patients linked to this partner (Use ILIKE for flexible matching)
                 const { data: patients, error } = await supabaseClient
                     .from('patients')
                     .select('*')
@@ -124,34 +131,22 @@
                     .order('created_at', { ascending: false });
 
                 if (error) throw error;
-
-                // Update Total Count
                 document.getElementById('stat-total').innerText = patients.length;
 
                 const tableBody = document.getElementById('referralTableBody');
                 tableBody.innerHTML = "";
 
                 if (patients.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-gray-400">
-                                No referrals yet. Click "Register New Patient" to start.
-                            </td>
-                        </tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-400">No referrals yet.</td></tr>`;
                     return;
                 }
 
-                // B. Fetch ALL files once (More efficient than looping)
                 const { data: allFiles } = await supabaseClient.storage.from('medical-records').list();
-                
                 let filesCount = 0;
                 let pendingCount = 0;
 
-                // C. Loop through patients and check their file status
                 patients.forEach(patient => {
                     const date = new Date(patient.created_at).toLocaleDateString();
-                    
-                    // Check if any file starts with this patient's name
                     const hasFiles = allFiles ? allFiles.some(f => f.name.startsWith(patient.name)) : false;
 
                     let statusBadge;
@@ -169,21 +164,16 @@
                             <td class="px-6 py-4 font-bold text-gray-900">${patient.name}</td>
                             <td class="px-6 py-4">${patient.mobile}</td>
                             <td class="px-6 py-4">${statusBadge}</td>
-                        </tr>
-                    `;
+                        </tr>`;
                     tableBody.innerHTML += row;
                 });
-
-                // Update Dashboard Counters
                 document.getElementById('stat-files').innerText = filesCount;
                 document.getElementById('stat-pending').innerText = pendingCount;
-
             } catch (err) {
                 console.error(err);
-                alert("Error loading data: " + err.message);
+                alert("Error: " + err.message);
             }
         }
     </script>
-
 </body>
 </html>
