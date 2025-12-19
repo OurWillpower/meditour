@@ -6,6 +6,7 @@
     <title>Patient Registration | TreatInt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
 <body class="bg-blue-50 h-screen flex items-center justify-center">
@@ -13,27 +14,25 @@
     <div class="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
         <div class="text-center mb-6">
             <h1 class="text-2xl font-bold text-blue-900">Create Health Locker</h1>
-            <p class="text-gray-500 text-sm">Securely store your medical records</p>
+            <p class="text-gray-500 text-sm">Powered by Supabase</p>
         </div>
 
         <form id="patientForm">
-            <input type="hidden" name="action" value="register-patient">
-
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Full Name</label>
-                    <input type="text" id="pName" name="Name" class="w-full border p-2 rounded" required placeholder="Name as on Passport">
+                    <input type="text" id="pName" class="w-full border p-2 rounded" required placeholder="Name as on Passport">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Mobile Number</label>
-                    <input type="text" name="Mobile" class="w-full border p-2 rounded" required placeholder="+91...">
+                    <input type="text" id="pMobile" class="w-full border p-2 rounded" required placeholder="+91...">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Create Password</label>
-                    <input type="password" name="Password" class="w-full border p-2 rounded" required>
+                    <input type="password" id="pPassword" class="w-full border p-2 rounded" required>
                 </div>
                 <button type="submit" id="submitBtn" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition">
-                    Sign Up
+                    Sign Up Now
                 </button>
             </div>
         </form>
@@ -43,36 +42,45 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxemn6bvNrq3my-zed5BavYddXK_cqsiFGSairgJR5xh0DbdDVyiPlwDTcARdI2VjIm/exec';
+        // --- 2. YOUR DATABASE CONFIGURATION ---
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
         
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // --- 3. SAVE LOGIC ---
         const form = document.getElementById('patientForm');
         const btn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             btn.disabled = true;
-            btn.innerHTML = "Processing...";
+            btn.innerHTML = "Saving to Database...";
 
-            // 1. SAVE NAME TO MEMORY
-            const userName = document.getElementById('pName').value;
-            localStorage.setItem('currentUser', userName);
+            const name = document.getElementById('pName').value;
+            const mobile = document.getElementById('pMobile').value;
+            const password = document.getElementById('pPassword').value;
 
-            // 2. SEND TO GOOGLE SHEET
-            const formData = new FormData(form);
-            const data = new URLSearchParams(formData);
+            // Save to Local Memory (so Dashboard knows who you are)
+            localStorage.setItem('currentUser', name);
 
-            fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
-            .then(() => {
-                alert("Success! Welcome, " + userName);
+            // Save to Supabase
+            const { data, error } = await supabase
+                .from('patients') // Must match your Table Name
+                .insert([
+                    { name: name, mobile: mobile, password: password }
+                ]);
+
+            if (error) {
+                console.error('Database Error:', error);
+                alert("Error: " + error.message + "\n(Check if Table Name is 'patients' and RLS is unchecked)");
+                btn.disabled = false;
+                btn.innerHTML = "Sign Up Now";
+            } else {
+                alert("Success! Account Created in Supabase.");
                 window.location.href = 'dashboard-patient.html';
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert("Welcome! (Offline Mode)");
-                window.location.href = 'dashboard-patient.html';
-            });
+            }
         });
     </script>
-
 </body>
 </html>
