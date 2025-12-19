@@ -6,6 +6,7 @@
     <title>Partner Registration | TreatInt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
 <body class="bg-green-50 h-screen flex items-center justify-center">
@@ -17,24 +18,22 @@
         </div>
 
         <form id="partnerForm">
-            <input type="hidden" name="action" value="register-partner">
-
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Your Name</label>
-                    <input type="text" name="Name" class="w-full border p-2 rounded" required>
+                    <input type="text" id="pName" class="w-full border p-2 rounded" required>
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Agency Name (Optional)</label>
-                    <input type="text" name="Agency" class="w-full border p-2 rounded">
+                    <input type="text" id="pAgency" class="w-full border p-2 rounded">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">WhatsApp Number</label>
-                    <input type="text" name="WhatsApp" class="w-full border p-2 rounded" required>
+                    <input type="text" id="pWhatsapp" class="w-full border p-2 rounded" required placeholder="+91...">
                 </div>
                 <div>
                     <label class="block text-sm font-bold text-gray-700">Create Password</label>
-                    <input type="password" name="Password" class="w-full border p-2 rounded" required>
+                    <input type="password" id="pPassword" class="w-full border p-2 rounded" required>
                 </div>
                 <button type="submit" id="submitBtn" class="w-full bg-green-700 text-white font-bold py-3 rounded hover:bg-green-800 transition">
                     Register Partner Account
@@ -47,30 +46,43 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxemn6bvNrq3my-zed5BavYddXK_cqsiFGSairgJR5xh0DbdDVyiPlwDTcARdI2VjIm/exec';
+        // --- CONFIGURATION ---
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
         const form = document.getElementById('partnerForm');
         const btn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             btn.disabled = true;
             btn.innerHTML = "Processing...";
 
-            const formData = new FormData(form);
-            const data = new URLSearchParams(formData);
+            const name = document.getElementById('pName').value;
+            const agency = document.getElementById('pAgency').value;
+            const whatsapp = document.getElementById('pWhatsapp').value;
+            const password = document.getElementById('pPassword').value;
 
-            fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors'})
-            .then(() => {
-                alert("Partner Application Submitted Successfully!");
-                window.location.href = 'dashboard-partner.html';
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert("Request Sent! Redirecting...");
-                window.location.href = 'dashboard-partner.html';
-            });
+            try {
+                const { data, error } = await _supabase
+                    .from('partners') 
+                    .insert([{ name: name, agency: agency, whatsapp: whatsapp, password: password }]);
+
+                if (error) {
+                    alert("Error: " + error.message);
+                    btn.disabled = false;
+                    btn.innerHTML = "Register Partner Account";
+                } else {
+                    localStorage.setItem('currentPartner', name);
+                    alert("Partner Application Submitted Successfully!");
+                    window.location.href = 'dashboard-partner.html';
+                }
+            } catch (err) {
+                alert("Network Error: " + err.message);
+                btn.disabled = false;
+            }
         });
     </script>
-
 </body>
 </html>
