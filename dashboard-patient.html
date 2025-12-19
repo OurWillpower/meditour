@@ -4,103 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Health Locker | TreatInt</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616490.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { font-family: 'Poppins', sans-serif; }
-        .status-line { height: 4px; background: #e5e7eb; position: absolute; top: 15px; left: 0; width: 100%; z-index: 0; }
-        .status-fill { height: 4px; background: #10b981; position: absolute; top: 15px; left: 0; width: 50%; z-index: 0; }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-blue-50">
 
     <nav class="bg-blue-900 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <i class="fas fa-globe-americas text-2xl mr-2"></i>
+                    <i class="fas fa-heartbeat text-2xl mr-2"></i>
                     <span class="font-bold text-xl">TreatInt Locker</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="text-right hidden md:block">
                         <div class="font-bold" id="display-name">Loading...</div>
-                        <div class="text-xs text-blue-200">ID: P-2025-889</div>
+                        <div class="text-xs text-blue-200">Patient Account</div>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" class="h-10 w-10 rounded-full border-2 border-white">
-                    <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded hover:bg-red-700 ml-2">Logout</button>
+                    <button onclick="logout()" class="text-sm bg-red-500 px-3 py-1 rounded hover:bg-red-600 ml-2">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto px-4 py-8">
         
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h2 class="text-lg font-bold text-gray-800 mb-6 border-b pb-2">Treatment Status: <span id="welcome-name" class="text-blue-600">Patient</span></h2>
-            <div class="relative px-4">
-                <div class="status-line"></div>
-                <div class="status-fill"></div>
-                <div class="relative z-10 flex justify-between text-center">
-                    <div><div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-check"></i></div><p class="text-xs font-bold text-green-600">Registered</p></div>
-                    <div><div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-file-medical"></i></div><p class="text-xs font-bold text-green-600">Docs Verified</p></div>
-                    <div><div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-2 ring-4 ring-blue-100"><i class="fas fa-plane"></i></div><p class="text-xs font-bold text-blue-600">Visa Process</p></div>
-                    <div><div class="w-8 h-8 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-procedures"></i></div><p class="text-xs text-gray-400">Surgery</p></div>
-                    <div><div class="w-8 h-8 bg-gray-200 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-2"><i class="fas fa-home"></i></div><p class="text-xs text-gray-400">Recovery</p></div>
-                </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Upload Medical Records</h2>
+            <div class="border-2 border-dashed border-blue-200 rounded-lg p-8 text-center hover:bg-blue-50 transition">
+                <input type="file" id="fileInput" class="hidden" onchange="handleFileSelect()">
+                <label for="fileInput" class="cursor-pointer block">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-blue-400 mb-2"></i>
+                    <p class="text-gray-600 font-bold">Click to Upload Report</p>
+                    <p class="text-xs text-gray-400">PDF, JPG, PNG (Max 5MB)</p>
+                </label>
+                <div id="fileNameDisplay" class="mt-4 text-sm font-bold text-green-600 hidden"></div>
             </div>
-            <div class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100 flex items-start">
-                <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
-                <p class="text-sm text-blue-800"><strong>Action Required:</strong> Your Medical Visa Invitation Letter has been generated. Please download it from the locker below.</p>
-            </div>
+            <button id="uploadBtn" onclick="uploadFile()" class="w-full mt-4 bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition hidden">
+                Confirm Upload
+            </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="md:col-span-2 space-y-6">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
-                        <h3 class="font-bold text-gray-800"><i class="fas fa-folder-open text-yellow-500 mr-2"></i> Medical Records</h3>
-                        <button class="text-xs bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" onclick="alert('Upload feature coming soon!')">+ Upload New</button>
-                    </div>
-                    <div class="divide-y divide-gray-100">
-                        <div class="p-4 flex items-center justify-between hover:bg-gray-50">
-                            <div class="flex items-center"><div class="bg-red-100 text-red-500 p-3 rounded-lg mr-4"><i class="fas fa-file-pdf text-xl"></i></div><div><p class="font-bold text-sm text-gray-800">Initial Diagnosis Report.pdf</p><p class="text-xs text-gray-500">Uploaded: 10 Oct 2025 • <span class="text-green-600 font-bold"><i class="fas fa-check-circle"></i> Verified</span></p></div></div>
-                            <div class="flex space-x-2"><button class="text-gray-400 hover:text-blue-600 p-2"><i class="fas fa-eye"></i></button></div>
-                        </div>
-                    </div>
-                </div>
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="px-6 py-4 border-b bg-gray-50 flex justify-between items-center">
+                <h3 class="font-bold text-gray-800">My Saved Documents</h3>
+                <button onclick="loadFiles()" class="text-blue-600 text-xs hover:underline"><i class="fas fa-sync"></i> Refresh</button>
             </div>
-
-            <div class="md:col-span-1">
-                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-yellow-400">
-                    <h3 class="font-bold text-gray-800 mb-4">Priority Support</h3>
-                    <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full border-2 border-yellow-400 mr-3">
-                        <div><p class="text-sm font-bold">Sarah Jenkins</p><p class="text-xs text-gray-500">Your Case Manager</p></div>
-                    </div>
-                    <a href="https://wa.me/" target="_blank" class="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg text-center shadow-lg"><i class="fab fa-whatsapp text-xl mr-2"></i> Chat on WhatsApp</a>
-                </div>
+            <div id="fileList" class="divide-y divide-gray-100">
+                <div class="p-6 text-center text-gray-400 text-sm">Loading your locker...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const storedName = localStorage.getItem('currentUser');
-        
-        if (storedName) {
-            document.getElementById('display-name').innerText = storedName;
-            document.getElementById('welcome-name').innerText = storedName;
+        // --- CONFIGURATION ---
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // 1. CHECK LOGIN
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
         } else {
-            document.getElementById('display-name').innerText = "Guest User";
+            document.getElementById('display-name').innerText = currentUser;
+            loadFiles(); // Load files on startup
         }
 
         function logout() {
             localStorage.removeItem('currentUser');
             window.location.href = 'index.html';
         }
-    </script>
 
+        // 2. FILE SELECTION UI
+        function handleFileSelect() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (file) {
+                document.getElementById('fileNameDisplay').innerText = "Selected: " + file.name;
+                document.getElementById('fileNameDisplay').classList.remove('hidden');
+                document.getElementById('uploadBtn').classList.remove('hidden');
+            }
+        }
+
+        // 3. UPLOAD LOGIC
+        async function uploadFile() {
+            const btn = document.getElementById('uploadBtn');
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+            try {
+                // Create a unique file name: "PatientName_Timestamp_FileName"
+                const fileName = `${currentUser}_${Date.now()}_${file.name}`;
+
+                // Upload to Supabase Storage Bucket 'medical-records'
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from('medical-records')
+                    .upload(fileName, file);
+
+                if (error) throw error;
+
+                alert("Success! File Uploaded.");
+                
+                // Reset UI
+                fileInput.value = "";
+                document.getElementById('fileNameDisplay').classList.add('hidden');
+                document.getElementById('uploadBtn').classList.add('hidden');
+                btn.disabled = false;
+                btn.innerText = "Confirm Upload";
+
+                // Refresh List
+                loadFiles();
+
+            } catch (err) {
+                alert("Upload Failed: " + err.message);
+                btn.disabled = false;
+                btn.innerText = "Confirm Upload";
+            }
+        }
+
+        // 4. LOAD FILES LOGIC
+        async function loadFiles() {
+            const listDiv = document.getElementById('fileList');
+            
+            try {
+                // List all files in the bucket
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from('medical-records')
+                    .list();
+
+                if (error) throw error;
+
+                // Filter files that belong to THIS user (based on name prefix)
+                const myFiles = data.filter(file => file.name.startsWith(currentUser));
+
+                if (myFiles.length === 0) {
+                    listDiv.innerHTML = '<div class="p-6 text-center text-gray-400 text-sm">No documents uploaded yet.</div>';
+                    return;
+                }
+
+                listDiv.innerHTML = ""; // Clear loader
+
+                myFiles.forEach(file => {
+                    // Create Download URL
+                    // Note: Since bucket is private, we normally need signed URLs. 
+                    // For this MVP, we will just list them.
+                    
+                    const date = new Date(file.created_at).toLocaleDateString();
+                    const cleanName = file.name.split('_').slice(2).join('_'); // Remove Prefix
+
+                    const row = `
+                        <div class="p-4 flex justify-between items-center hover:bg-gray-50">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded text-blue-600 mr-3">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">${cleanName}</p>
+                                    <p class="text-xs text-gray-400">${date} • ${(file.metadata.size / 1024).toFixed(1)} KB</p>
+                                </div>
+                            </div>
+                            <span class="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded">Stored</span>
+                        </div>
+                    `;
+                    listDiv.innerHTML += row;
+                });
+
+            } catch (err) {
+                console.error(err);
+                listDiv.innerHTML = '<div class="p-6 text-center text-red-400 text-sm">Error loading files.</div>';
+            }
+        }
+    </script>
 </body>
 </html>
