@@ -97,11 +97,15 @@
             if (currentRole === 'patient') {
                 table = 'patients'; 
                 idColumn = 'mobile'; 
-                redirectPage = 'patient-home.html'; // CHANGED: Redirects to new dashboard
+                redirectPage = 'patient-home.html'; // UPDATED
             } else if (currentRole === 'partner') {
-                table = 'partners'; idColumn = 'whatsapp'; redirectPage = 'dashboard-partner.html';
+                table = 'partners'; 
+                idColumn = 'whatsapp'; 
+                redirectPage = 'partner-home.html'; // UPDATED
             } else {
-                table = 'hospitals'; idColumn = 'email'; redirectPage = 'dashboard-hospital.html';
+                table = 'hospitals'; 
+                idColumn = 'email'; 
+                redirectPage = 'hospital-home.html'; // UPDATED
             }
 
             try {
