@@ -6,11 +6,23 @@
     <title>Login | TreatInt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style> body { font-family: 'Poppins', sans-serif; } </style>
 </head>
-<body class="bg-gray-100 h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div id="statusBanner" class="hidden w-full max-w-md mb-6 p-4 rounded-lg text-sm text-center shadow-md"></div>
+    <div id="diagnosticBox" class="w-full max-w-md bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 shadow hidden">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-yellow-700 font-bold">Connection Issue Detected</p>
+                <p class="text-xs text-yellow-600 mt-1" id="diagMsg">Running tests...</p>
+                <button onclick="window.location.reload()" class="mt-2 bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded hover:bg-yellow-300 font-bold">Retry Connection</button>
+            </div>
+        </div>
+    </div>
 
     <div class="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
         <div class="text-center mb-6">
@@ -48,45 +60,28 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        const SUPABASE_URL = 'https://atsdebykxuhtruuwcmlx.supabase.co';
-        // Key from your history/dashboard
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        // CONFIGURATION
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
         
+        let supabaseClient;
         let currentRole = 'patient';
 
-        // --- 1. IMMEDIATE CONNECTION TEST ---
-        window.onload = async function() {
-            const banner = document.getElementById('statusBanner');
-            try {
-                // Try to fetch the root URL to check connectivity
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/`, {
-                    method: 'HEAD',
-                    headers: { 'apikey': SUPABASE_KEY }
-                });
-                console.log("Connection Test: Success");
-            } catch (err) {
-                console.error("Connection Test Failed:", err);
-                banner.classList.remove('hidden');
-                banner.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-400');
-                banner.innerHTML = `
-                    <strong>Connection Blocked!</strong><br>
-                    Your browser or network is blocking the database.<br>
-                    <span class="text-xs">Try disabling AdBlocker, switching to Mobile Data, or using a different browser.</span>
-                `;
-            }
-        };
+        // 1. INITIALIZE & TEST
+        try {
+            supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+            console.log("Supabase Client Initialized");
+        } catch (err) {
+            showError("Could not initialize Supabase. Check script loading.");
+        }
 
-        // --- 2. ROLE SWITCHING LOGIC ---
+        // 2. ROLE SWITCHING
         function setRole(role) {
             currentRole = role;
-            // Reset styles
             ['patient', 'partner', 'hospital'].forEach(r => {
                 const tab = document.getElementById('tab-' + r);
                 tab.className = "flex-1 py-2 text-sm font-bold rounded-md text-gray-500 hover:text-gray-700 transition";
             });
-
-            // Set Active Style
             const activeTab = document.getElementById('tab-' + role);
             activeTab.className = "flex-1 py-2 text-sm font-bold rounded-md bg-white shadow transition";
             
@@ -108,20 +103,19 @@
             }
         }
 
-        // --- 3. LOGIN LOGIC ---
+        // 3. LOGIN LOGIC
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const banner = document.getElementById('statusBanner');
+            const diagBox = document.getElementById('diagnosticBox');
             
             btn.disabled = true;
-            btn.innerText = "Verifying...";
-            banner.classList.add('hidden'); // Hide previous errors
+            btn.innerText = "Connecting...";
+            diagBox.classList.add('hidden');
 
             const id = document.getElementById('userId').value.trim();
             const pass = document.getElementById('userPass').value.trim();
 
-            // Setup variables based on role
             let table, idColumn, redirectPage;
             if (currentRole === 'patient') {
                 table = 'patients'; idColumn = 'mobile'; redirectPage = 'patient-home.html';
@@ -131,56 +125,51 @@
                 table = 'hospitals'; idColumn = 'email'; redirectPage = 'hospital-home.html';
             }
 
-            // Construct URL carefully
-            // We search for a row where ID matches AND Password matches
-            const url = `${SUPABASE_URL}/rest/v1/${table}?${idColumn}=eq.${encodeURIComponent(id)}&password=eq.${encodeURIComponent(pass)}&select=*`;
-
             try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': 'Bearer ' + SUPABASE_KEY,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                // Perform Query
+                const { data, error } = await supabaseClient
+                    .from(table)
+                    .select('*')
+                    .eq(idColumn, id)
+                    .eq('password', pass);
 
-                if (!response.ok) {
-                    throw new Error(`Server Error: ${response.status}`);
+                // HANDLE SUPABASE/NETWORK ERRORS
+                if (error) {
+                    throw error;
                 }
 
-                const data = await response.json();
-
-                if (data.length > 0) {
-                    // LOGIN SUCCESS
+                // HANDLE SUCCESS
+                if (data && data.length > 0) {
                     const user = data[0];
-                    // Save Name/ID for other pages to use
-                    const userName = user.name || user.hospital_name || user.contact_person || 'User';
-                    localStorage.setItem('currentUser', userName);
+                    const name = user.name || user.hospital_name || user.contact_person || 'User';
+                    localStorage.setItem('currentUser', name);
                     window.location.href = redirectPage;
                 } else {
-                    // LOGIN FAILED (Wrong ID/Pass)
-                    banner.classList.remove('hidden', 'bg-red-100', 'text-red-700');
-                    banner.classList.add('bg-yellow-100', 'text-yellow-800', 'border', 'border-yellow-400');
-                    banner.innerHTML = "<strong>Login Failed:</strong> Invalid ID or Password.";
+                    // WRONG PASSWORD
+                    alert("Invalid Credentials. Please try again.");
                     btn.disabled = false;
                     btn.innerText = "Login";
                 }
 
             } catch (err) {
-                // NETWORK/SYSTEM ERROR
                 console.error(err);
-                banner.classList.remove('hidden', 'bg-yellow-100', 'text-yellow-800');
-                banner.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-400');
                 
-                if (err.message.includes('Failed to fetch')) {
-                    banner.innerHTML = "<strong>Network Error:</strong> Cannot reach server. Please turn off AdBlocker or try Mobile Data.";
-                } else {
-                    banner.innerHTML = `<strong>System Error:</strong> ${err.message}`;
-                }
-                
+                // SHOW DETAILED DIAGNOSIS ON SCREEN
+                diagBox.classList.remove('hidden');
                 btn.disabled = false;
                 btn.innerText = "Login";
+
+                if (err.message.includes("Failed to fetch")) {
+                    document.getElementById('diagMsg').innerHTML = `
+                        <strong>NETWORK BLOCKED</strong><br>
+                        Your browser cannot reach the database.<br>
+                        1. Turn off <strong>AdBlocker / uBlock Origin</strong>.<br>
+                        2. If on Office/School WiFi, try <strong>Mobile Data</strong>.<br>
+                        3. Try a different browser (Chrome/Edge).
+                    `;
+                } else {
+                    document.getElementById('diagMsg').innerText = "System Error: " + err.message;
+                }
             }
         });
     </script>
