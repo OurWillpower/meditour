@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | TreatInt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-blue-50">
+
+    <nav class="bg-blue-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center hover:opacity-80 transition">
+                    <i class="fas fa-heartbeat text-2xl mr-2"></i>
+                    <span class="font-bold text-xl">TreatInt</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="patient-home.html" class="hover:text-blue-200 transition flex items-center gap-2">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <button onclick="logout()" class="text-sm bg-red-500 px-3 py-1 rounded hover:bg-red-600 ml-2">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        
+        <div class="text-sm text-gray-500 mb-6 flex items-center">
+            <a href="patient-home.html" class="hover:text-blue-800 hover:underline transition font-bold text-blue-900">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a> 
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="bg-gray-50 px-8 py-6 border-b flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">My Profile</h2>
+                    <p class="text-sm text-gray-500">Keep your details updated for Visa processing.</p>
+                </div>
+                <div class="bg-blue-100 p-4 rounded-full text-blue-600">
+                    <i class="fas fa-user text-2xl"></i>
+                </div>
+            </div>
+
+            <form id="profileForm" class="p-8 space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Full Name</label>
+                        <input type="text" id="pName" class="w-full border-b-2 border-gray-200 bg-transparent py-2 font-bold text-gray-600 cursor-not-allowed" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Mobile Number</label>
+                        <input type="text" id="pMobile" class="w-full border-b-2 border-gray-200 bg-transparent py-2 font-bold text-gray-600 cursor-not-allowed" readonly>
+                    </div>
+                </div>
+
+                <hr class="border-gray-100">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Passport Number</label>
+                        <input type="text" id="pPassport" class="w-full border p-3 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Required for Visa">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Country</label>
+                        <input type="text" id="pCountry" class="w-full border p-3 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. Bangladesh">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Age</label>
+                        <input type="number" id="pAge" class="w-full border p-3 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 35">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email Address</label>
+                        <input type="email" id="pEmail" class="w-full border p-3 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="For notifications">
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="saveBtn" class="w-full bg-blue-900 text-white font-bold py-4 rounded-lg hover:bg-blue-800 transition shadow-lg">
+                        Save Changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) window.location.href = 'login.html';
+
+        function logout() { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; }
+
+        // 1. LOAD PROFILE
+        async function loadProfile() {
+            try {
+                // Fetch user details by Name (stored in localstorage)
+                const { data, error } = await supabaseClient
+                    .from('patients')
+                    .select('*')
+                    .eq('name', currentUser)
+                    .single();
+
+                if (error) throw error;
+
+                // Fill Form
+                document.getElementById('pName').value = data.name;
+                document.getElementById('pMobile').value = data.mobile;
+                document.getElementById('pPassport').value = data.passport_number || '';
+                document.getElementById('pCountry').value = data.country || '';
+                document.getElementById('pAge').value = data.age || '';
+                document.getElementById('pEmail').value = data.email || '';
+
+            } catch (err) {
+                console.error(err);
+                alert("Error loading profile. Please login again.");
+            }
+        }
+
+        // 2. SAVE PROFILE
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+
+            const updates = {
+                passport_number: document.getElementById('pPassport').value,
+                country: document.getElementById('pCountry').value,
+                age: document.getElementById('pAge').value,
+                email: document.getElementById('pEmail').value
+            };
+
+            try {
+                const { error } = await supabaseClient
+                    .from('patients')
+                    .update(updates)
+                    .eq('name', currentUser);
+
+                if (error) throw error;
+
+                alert("Profile Updated Successfully!");
+
+            } catch (err) {
+                alert("Update Failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Save Changes";
+            }
+        });
+
+        loadProfile();
+    </script>
+</body>
+</html>
