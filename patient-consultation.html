@@ -48,7 +48,10 @@
 
             <div class="md:col-span-1">
                 <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-purple-500 sticky top-4">
-                    <h3 class="font-bold text-lg text-gray-800 mb-4">My Appointments</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg text-gray-800">My Appointments</h3>
+                        <button onclick="loadAppointments()" class="text-xs text-purple-600 hover:underline">Refresh</button>
+                    </div>
                     <div id="myAppointments" class="space-y-4 max-h-[400px] overflow-y-auto">
                         <p class="text-sm text-gray-400 text-center">No upcoming visits.</p>
                     </div>
@@ -78,9 +81,11 @@
                     <select id="bookTime" class="w-full border p-2 rounded focus:ring-2 focus:ring-purple-500 outline-none">
                         <option>10:00 AM</option>
                         <option>11:00 AM</option>
+                        <option>12:00 PM</option>
                         <option>02:00 PM</option>
                         <option>03:00 PM</option>
                         <option>04:00 PM</option>
+                        <option>05:00 PM</option>
                     </select>
                 </div>
                 <div class="flex justify-end space-x-3 mt-6">
@@ -92,7 +97,6 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
@@ -101,7 +105,6 @@
         if (!currentUser) window.location.href = 'login.html';
 
         let selectedDoc = null;
-        let selectedDocLink = null;
 
         function logout() { 
             localStorage.removeItem('currentUser'); 
@@ -137,7 +140,7 @@
                                     <p class="text-sm text-purple-600 font-medium">${doc.specialty}</p>
                                 </div>
                             </div>
-                            <button onclick="openBookModal('${doc.name}', '${doc.meet_link}')" class="bg-purple-600 text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-purple-700 shadow transition transform hover:-translate-y-0.5">
+                            <button onclick="openBookModal('${doc.name}')" class="bg-purple-600 text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-purple-700 shadow transition transform hover:-translate-y-0.5">
                                 Book
                             </button>
                         </div>
@@ -150,7 +153,7 @@
             }
         }
 
-        // 2. LOAD MY APPOINTMENTS (Read from 'appointments' table)
+        // 2. LOAD MY APPOINTMENTS (Check for link)
         async function loadAppointments() {
             const container = document.getElementById('myAppointments');
             try {
@@ -169,22 +172,34 @@
                 }
 
                 data.forEach(apt => {
-                    // Format Date nicely
                     const dateObj = new Date(apt.date);
                     const dateStr = dateObj.toLocaleDateString();
 
-                    const item = `
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500 shadow-sm mb-3">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <p class="font-bold text-sm text-gray-800">${apt.doctor_name}</p>
-                                    <p class="text-xs text-gray-500">${dateStr} @ ${apt.time}</p>
-                                </div>
-                                <i class="fas fa-video text-green-500"></i>
+                    // LOGIC CHECK: Is there a link?
+                    const hasLink = apt.meet_link && apt.meet_link.length > 5;
+
+                    let actionButton;
+                    if (hasLink) {
+                        actionButton = `
+                            <a href="${apt.meet_link}" target="_blank" class="block w-full text-center bg-green-600 text-white text-xs font-bold py-2 rounded hover:bg-green-700 transition shadow">
+                                <i class="fas fa-video mr-1"></i> Join Meeting
+                            </a>`;
+                    } else {
+                        actionButton = `
+                            <div class="w-full text-center bg-yellow-100 text-yellow-700 text-xs font-bold py-2 rounded border border-yellow-200">
+                                <i class="fas fa-clock mr-1"></i> Waiting for Link...
                             </div>
-                            <a href="${apt.meet_link}" target="_blank" class="block w-full text-center bg-green-600 text-white text-xs font-bold py-2 rounded hover:bg-green-700 transition">
-                                Join Meeting
-                            </a>
+                            <p class="text-[10px] text-gray-400 text-center mt-1">Hospital will send link shortly</p>
+                        `;
+                    }
+
+                    const item = `
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 ${hasLink ? 'border-green-500' : 'border-yellow-400'} shadow-sm mb-3">
+                            <div class="mb-3">
+                                <p class="font-bold text-sm text-gray-800">${apt.doctor_name}</p>
+                                <p class="text-xs text-gray-500">${dateStr} @ ${apt.time}</p>
+                            </div>
+                            ${actionButton}
                         </div>
                     `;
                     container.innerHTML += item;
@@ -196,15 +211,11 @@
         }
 
         // 3. BOOKING LOGIC
-        function openBookModal(name, link) {
+        function openBookModal(name) {
             selectedDoc = name;
-            selectedDocLink = link;
             document.getElementById('modalDocName').innerText = name;
-            
-            // Set min date to today
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('bookDate').setAttribute('min', today);
-            
             document.getElementById('bookModal').classList.remove('hidden');
         }
 
@@ -222,6 +233,7 @@
             const time = document.getElementById('bookTime').value;
 
             try {
+                // Insert appointment with NULL link initially
                 const { error } = await supabaseClient
                     .from('appointments')
                     .insert([{ 
@@ -229,14 +241,14 @@
                         doctor_name: selectedDoc,
                         date: date,
                         time: time,
-                        meet_link: selectedDocLink
+                        meet_link: "" // Empty initially
                     }]);
 
                 if (error) throw error;
 
-                alert("Success! Your appointment has been confirmed.");
+                alert("Booking Request Sent! Please wait for the hospital to provide the meeting link.");
                 closeModal();
-                loadAppointments(); // Refresh the sidebar list
+                loadAppointments(); 
 
             } catch (err) {
                 alert("Booking Error: " + err.message);
