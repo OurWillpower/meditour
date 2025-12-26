@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Manager | TreatInt Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-gray-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="hospital-home.html" class="flex items-center hover:opacity-80 transition">
+                    <i class="fas fa-ambulance text-2xl mr-2 text-yellow-500"></i>
+                    <span class="font-bold text-xl">Logistics Command</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="hospital-home.html" class="hover:text-gray-200 transition flex items-center gap-2">
+                        <i class="fas fa-home"></i> Console
+                    </a>
+                    <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded hover:bg-red-700 ml-2">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">Patient Journey Tracker</h2>
+                <p class="text-sm text-gray-500">Manage Tickets, Pickup, Hospitalisation, and Rehab.</p>
+            </div>
+            <button onclick="loadLogistics()" class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded shadow hover:bg-gray-50 text-sm font-bold">
+                <i class="fas fa-sync mr-1"></i> Refresh Data
+            </button>
+        </div>
+
+        <div class="grid grid-cols-5 gap-4 mb-8 text-center text-xs font-bold text-gray-500 uppercase">
+            <div class="bg-white p-2 rounded shadow border-b-4 border-gray-400">1. Home</div>
+            <div class="bg-white p-2 rounded shadow border-b-4 border-blue-500">2. Travel (Tickets/Cab)</div>
+            <div class="bg-white p-2 rounded shadow border-b-4 border-green-500">3. Hospitalisation</div>
+            <div class="bg-white p-2 rounded shadow border-b-4 border-yellow-500">4. Rehab / Hotel</div>
+            <div class="bg-white p-2 rounded shadow border-b-4 border-purple-500">5. Return Journey</div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-4">Patient Name</th>
+                        <th class="px-6 py-4">Current Stage</th>
+                        <th class="px-6 py-4">Service Details</th>
+                        <th class="px-6 py-4">Last Update</th>
+                        <th class="px-6 py-4 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="logisticsTable">
+                    <tr><td colspan="5" class="px-6 py-8 text-center">Loading journeys...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Update Status</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <form id="updateForm" class="space-y-4">
+                <input type="hidden" id="editId">
+                <div class="bg-blue-50 p-2 rounded mb-2">
+                    <p class="text-xs font-bold text-blue-800 uppercase">Patient</p>
+                    <p class="font-bold text-gray-800" id="modalPatientName">...</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Move To Stage</label>
+                    <select id="newStage" class="w-full border p-2 rounded bg-gray-50 focus:ring-2 focus:ring-blue-500">
+                        <option value="Home">Home (Planning)</option>
+                        <option value="Travel">Travel (Tickets & Pickup)</option>
+                        <option value="Hospital">Hospitalisation (Admitted)</option>
+                        <option value="Rehab">Rehab / Hotel Stay</option>
+                        <option value="Return">Return Journey</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Service Details / Notes</label>
+                    <textarea id="newNotes" rows="3" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500" placeholder="e.g. Flight AI-202 Confirmed, Driver: Ramesh (98900...), Room 305 allocated"></textarea>
+                    <p class="text-[10px] text-gray-400">Patient will see this note on their dashboard.</p>
+                </div>
+                
+                <button type="submit" id="saveBtn" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition">
+                    Update Journey
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) window.location.href = 'login.html';
+
+        function logout() { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; }
+
+        // 1. LOAD LOGISTICS DATA
+        async function loadLogistics() {
+            const tbody = document.getElementById('logisticsTable');
+            try {
+                // Fetch all active logistics records
+                const { data, error } = await supabaseClient
+                    .from('logistics')
+                    .select('*')
+                    .order('id', { ascending: false });
+
+                if (error) throw error;
+
+                tbody.innerHTML = "";
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">No active journeys.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(trip => {
+                    // Color coding for stages
+                    let badgeColor = "bg-gray-100 text-gray-800";
+                    if(trip.current_stage === 'Travel') badgeColor = "bg-blue-100 text-blue-800";
+                    if(trip.current_stage === 'Hospital') badgeColor = "bg-green-100 text-green-800";
+                    if(trip.current_stage === 'Rehab') badgeColor = "bg-yellow-100 text-yellow-800";
+                    
+                    const notes = trip.driver_details || "No updates yet.";
+
+                    const row = `
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-bold text-gray-900">${trip.patient_name}</td>
+                            <td class="px-6 py-4">
+                                <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-bold uppercase border">${trip.current_stage || 'Pending'}</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-xs text-gray-600 truncate w-64" title="${notes}">${notes}</p>
+                            </td>
+                            <td class="px-6 py-4 text-xs text-gray-400">
+                                ${trip.pickup_type || 'N/A'}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="openModal('${trip.id}', '${trip.patient_name}', '${trip.current_stage}', '${notes.replace(/'/g, "\\'")}')" class="bg-blue-900 text-white px-4 py-2 rounded text-xs font-bold hover:bg-blue-800 shadow">
+                                    Update
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-red-500">Error loading data.</td></tr>`;
+            }
+        }
+
+        // 2. UPDATE LOGIC
+        function openModal(id, name, stage, notes) {
+            document.getElementById('editId').value = id;
+            document.getElementById('modalPatientName').innerText = name;
+            document.getElementById('newStage').value = stage || 'Home';
+            document.getElementById('newNotes').value = notes || '';
+            document.getElementById('updateModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('updateModal').classList.add('hidden');
+        }
+
+        document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true; btn.innerText = "Updating...";
+
+            const id = document.getElementById('editId').value;
+            const stage = document.getElementById('newStage').value;
+            const notes = document.getElementById('newNotes').value;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('logistics')
+                    .update({ 
+                        current_stage: stage,
+                        driver_details: notes // We use this field for general status notes
+                    })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                alert("Patient Status Updated!");
+                closeModal();
+                loadLogistics();
+
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                btn.disabled = false; btn.innerText = "Update Journey";
+            }
+        });
+
+        loadLogistics();
+    </script>
+</body>
+</html>
