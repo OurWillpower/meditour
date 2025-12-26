@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Partner Registry | TreatInt Internal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-200">
+
+    <nav class="bg-gray-900 text-white shadow-lg border-b-4 border-red-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-building text-2xl mr-2 text-red-500"></i>
+                    <span class="font-bold text-xl tracking-wider">TreatInt <span class="text-gray-400 text-sm font-normal">INTERNAL HQ</span></span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <span class="text-xs bg-red-900 px-3 py-1 rounded text-red-200 border border-red-700">SUPER ADMIN VIEW</span>
+                    <a href="hospital-home.html" class="hover:text-gray-200 transition text-sm">
+                        <i class="fas fa-arrow-left"></i> Back to Console
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded shadow border-l-4 border-gray-800">
+                <p class="text-xs font-bold text-gray-500 uppercase">Total Agents</p>
+                <h3 class="text-3xl font-bold text-gray-800" id="statAgents">0</h3>
+            </div>
+            <div class="bg-white p-6 rounded shadow border-l-4 border-blue-600">
+                <p class="text-xs font-bold text-gray-500 uppercase">Total Referrals</p>
+                <h3 class="text-3xl font-bold text-blue-600" id="statReferrals">0</h3>
+            </div>
+            <div class="bg-white p-6 rounded shadow border-l-4 border-green-600">
+                <p class="text-xs font-bold text-gray-500 uppercase">Commission Payable</p>
+                <h3 class="text-3xl font-bold text-green-600" id="statPayout">₹0</h3>
+                <p class="text-[10px] text-gray-400">@ ₹1000 flat rate</p>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-end mb-4">
+            <h2 class="text-xl font-bold text-gray-800">Partner Ledger</h2>
+            <div class="space-x-2">
+                <button onclick="loadPartners()" class="text-sm text-blue-600 hover:underline"><i class="fas fa-sync"></i> Refresh Data</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-white uppercase bg-gray-800">
+                    <tr>
+                        <th class="px-6 py-4">Partner Name</th>
+                        <th class="px-6 py-4">WhatsApp / ID</th>
+                        <th class="px-6 py-4 text-center">Referrals</th>
+                        <th class="px-6 py-4 text-right">Commission Due</th>
+                        <th class="px-6 py-4 text-center">Status</th>
+                        <th class="px-6 py-4 text-right">Admin Action</th>
+                    </tr>
+                </thead>
+                <tbody id="adminPartnerTable">
+                    <tr><td colspan="6" class="px-6 py-8 text-center">Loading secure data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) window.location.href = 'login.html';
+
+        async function loadPartners() {
+            const tbody = document.getElementById('adminPartnerTable');
+            try {
+                // 1. Fetch ALL Partners
+                const { data: partners, error: err1 } = await supabaseClient
+                    .from('partners')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (err1) throw err1;
+
+                // 2. Fetch ALL Patients (to calculate metrics)
+                const { data: patients, error: err2 } = await supabaseClient
+                    .from('patients')
+                    .select('referred_by');
+
+                if (err2) throw err2;
+
+                // --- AGGREGATE METRICS ---
+                let totalAgents = partners.length;
+                let totalReferrals = 0;
+                let totalPayout = 0;
+
+                tbody.innerHTML = "";
+                
+                if (partners.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">No agents found in database.</td></tr>`;
+                    return;
+                }
+
+                partners.forEach(partner => {
+                    // Count referrals for this specific partner
+                    const myReferrals = patients.filter(p => p.referred_by === partner.name).length;
+                    const commission = myReferrals * 1000; // Business Logic: ₹1000 per patient
+
+                    // Add to Globals
+                    totalReferrals += myReferrals;
+                    totalPayout += commission;
+
+                    // Row Logic
+                    const isHighPerformer = myReferrals >= 5;
+                    const rowClass = isHighPerformer ? "bg-green-50" : "bg-white";
+                    
+                    const row = `
+                        <tr class="${rowClass} border-b hover:bg-gray-100 transition">
+                            <td class="px-6 py-4 font-bold text-gray-800">
+                                ${partner.name}
+                                ${isHighPerformer ? '<span class="ml-2 text-[10px] bg-yellow-100 text-yellow-800 px-1 rounded border border-yellow-300">STAR</span>' : ''}
+                            </td>
+                            <td class="px-6 py-4 font-mono text-xs text-gray-600">
+                                ${partner.whatsapp}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-bold text-xs">${myReferrals}</span>
+                            </td>
+                            <td class="px-6 py-4 text-right font-mono font-bold text-green-700">
+                                ₹${commission.toLocaleString()}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded border border-green-200 font-bold">Verified</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="alert('Payout feature coming in next finance update')" class="text-xs bg-gray-800 text-white px-3 py-1 rounded hover:bg-black">
+                                    Manage Payout
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+
+                // Update Header Stats
+                document.getElementById('statAgents').innerText = totalAgents;
+                document.getElementById('statReferrals').innerText = totalReferrals;
+                document.getElementById('statPayout').innerText = "₹" + totalPayout.toLocaleString();
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-red-500">System Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        loadPartners();
+    </script>
+</body>
+</html>
