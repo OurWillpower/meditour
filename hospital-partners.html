@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Network | TreatInt Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style> body { font-family: 'Poppins', sans-serif; } </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-gray-900 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="hospital-home.html" class="flex items-center hover:opacity-80 transition">
+                    <i class="fas fa-handshake text-2xl mr-2 text-green-400"></i>
+                    <span class="font-bold text-xl">Partner Network</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="hospital-home.html" class="hover:text-gray-200 transition flex items-center gap-2">
+                        <i class="fas fa-home"></i> Console
+                    </a>
+                    <button onclick="logout()" class="text-sm bg-red-600 px-3 py-1 rounded hover:bg-red-700 ml-2">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">Agent Performance Tracker</h2>
+                <p class="text-sm text-gray-500">Monitor your referral sources and their patient volume.</p>
+            </div>
+            <div class="bg-white px-4 py-2 rounded shadow text-sm font-bold text-gray-600 border border-gray-200">
+                <i class="fas fa-users mr-2 text-blue-500"></i> Total Agents: <span id="totalAgents">0</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-4">Agent / Agency Name</th>
+                        <th class="px-6 py-4">WhatsApp Contact</th>
+                        <th class="px-6 py-4">Patients Referred</th>
+                        <th class="px-6 py-4 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="partnerTable">
+                    <tr><td colspan="4" class="px-6 py-8 text-center">Loading network data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const supabaseUrl = 'https://atsdebykxuhtruuwcmlx.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0c2RlYnlreHVodHJ1dXdjbWx4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNjA2NDQsImV4cCI6MjA4MTczNjY0NH0.-K8dMdgR-Jd9eI4zhz2oJ6vBA6B4GttVXtMDE7zKXS8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) window.location.href = 'login.html';
+
+        function logout() { localStorage.removeItem('currentUser'); window.location.href = 'index.html'; }
+
+        async function loadPartners() {
+            const tbody = document.getElementById('partnerTable');
+            try {
+                // 1. Get all Partners
+                const { data: partners, error: err1 } = await supabaseClient
+                    .from('partners')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (err1) throw err1;
+
+                // 2. Get all Patients (to count referrals)
+                const { data: patients, error: err2 } = await supabaseClient
+                    .from('patients')
+                    .select('referred_by');
+
+                if (err2) throw err2;
+
+                document.getElementById('totalAgents').innerText = partners.length;
+                tbody.innerHTML = "";
+
+                if (partners.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">No partners registered yet.</td></tr>`;
+                    return;
+                }
+
+                partners.forEach(partner => {
+                    // Count how many patients list this partner as 'referred_by'
+                    // Note: This relies on the Partner Name being unique and matching the tag.
+                    const referralCount = patients.filter(p => p.referred_by === partner.name).length;
+                    
+                    let performanceBadge = `<span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">New</span>`;
+                    if (referralCount > 0) performanceBadge = `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">${referralCount} Patients</span>`;
+                    if (referralCount > 10) performanceBadge = `<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">★ Top Agent (${referralCount})</span>`;
+
+                    const row = `
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-bold text-gray-900">
+                                <i class="fas fa-user-tie text-gray-400 mr-2"></i> ${partner.name}
+                            </td>
+                            <td class="px-6 py-4 font-mono text-xs text-gray-600">
+                                ${partner.whatsapp}
+                            </td>
+                            <td class="px-6 py-4">
+                                ${performanceBadge}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="https://wa.me/${partner.whatsapp.replace('+', '')}?text=Hello ${partner.name}, regarding your referrals..." target="_blank" class="bg-green-600 text-white px-3 py-2 rounded text-xs font-bold hover:bg-green-700 shadow">
+                                    <i class="fab fa-whatsapp mr-1"></i> Chat
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-8 text-center text-red-500">Error loading data.</td></tr>`;
+            }
+        }
+
+        loadPartners();
+    </script>
+</body>
+</html>
